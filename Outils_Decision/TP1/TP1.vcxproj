@@ -152,6 +152,10 @@
     <ClInclude Include="Operations.hpp" />
     <ClInclude Include="Solution.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="DLP_210.dat" />
+    <None Include="graph_p2" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

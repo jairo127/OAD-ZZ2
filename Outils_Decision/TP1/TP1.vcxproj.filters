@@ -13,39 +13,59 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Fichiers sources\Classes">
+      <UniqueIdentifier>{eb9ce6b6-234b-4908-8c0b-f7f9bd122f49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Classes">
+      <UniqueIdentifier>{0358e6ae-4895-4fb0-882d-1ed6e7edc6ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Headers">
+      <UniqueIdentifier>{9f2223ba-cc11-4939-9fa3-d39667538169}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Sources">
+      <UniqueIdentifier>{1a8682ea-ed17-4332-89eb-0c99a43a671e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TP1.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Source.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="Graph.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\Classes</Filter>
     </ClCompile>
     <ClCompile Include="Solution.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\Classes</Filter>
     </ClCompile>
     <ClCompile Include="Operations.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source.cpp">
+      <Filter>Fichiers sources\Sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Header.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+    <ClInclude Include="Solution.hpp">
+      <Filter>Fichiers d%27en-tête\Classes</Filter>
     </ClInclude>
     <ClInclude Include="Graph.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Solution.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>Fichiers d%27en-tête\Classes</Filter>
     </ClInclude>
     <ClInclude Include="Constants.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>Fichiers d%27en-tête\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Operations.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>Fichiers d%27en-tête\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Header.h">
+      <Filter>Fichiers d%27en-tête\Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DLP_210.dat">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="graph_p2">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
   </ItemGroup>
 </Project>
