@@ -1,7 +1,10 @@
 #ifndef GRAPH
 #define GRAPH
 
+#include <iostream>
 #include "Constants.hpp"
+
+using namespace std;
 
 /**
 * Name : Graph
@@ -20,6 +23,7 @@ private:
 public:
     // Constructors
     Graph(int n);
+    Graph(string file_path);
 
     // Methods
     int getN();
