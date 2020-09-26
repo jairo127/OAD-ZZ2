@@ -2,8 +2,8 @@
 #define CONSTANTS
 
 // Constantes
-const int nmax_sommets = 20;
-const int nmax_succ = 4;
-const int inf = 10000;
+const int nmax_sommets = 300;
+const int nmax_succ = 20;
+const int inf = 9999999999999;
 
 #endif

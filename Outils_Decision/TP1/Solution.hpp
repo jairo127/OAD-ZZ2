@@ -11,16 +11,16 @@
 class Solution
 {
 private:
-	int m[nmax_sommets + 1]; // marques
+	float m[nmax_sommets + 1]; // marques
 	int pere[nmax_sommets + 1]; // pères
 	int niv[nmax_sommets + 1]; // niveaux
 
 public:
 	// Methods
-	void insertM(int i, int val);
+	void insertM(int i, float val);
 	void insertPere(int i, int val);
 	void insertNiv(int i, int val);
-	int getM(int i);
+	float getM(int i);
 	int getPere(int i);
 	int getNiv(int i);
 };

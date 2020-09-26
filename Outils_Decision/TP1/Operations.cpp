@@ -141,7 +141,8 @@ void applyDijkstra(Graph& G, const int start, const int end, Solution& sol)
 
     for (int i = start; i <= end; i++) {
         // recherche sommet marque la plus petite
-        int min = inf, imin = 0;
+        float min = inf;
+        int imin = 0;
         for (int j = 1; j <= G.getN(); j++)
         {
             if ((sol.getM(j) <= min) && (T[j] == 0))
@@ -150,13 +151,13 @@ void applyDijkstra(Graph& G, const int start, const int end, Solution& sol)
                 imin = j;
             }
         }
-        
+        cout << "Sommet en cours de traitement = " << imin << endl;
         // mettre à jour tous les successeurs de imin
         int nb_succ = G.getNS(imin);
         for (int j = 1; j <= nb_succ; j++)
         {
             int k = G.getS(imin, j);
-            int m_dest = sol.getM(imin) + G.getL(imin, j);
+            float m_dest = sol.getM(imin) + G.getL(imin, j);
             if ( m_dest < sol.getM(k))
             {
                 sol.insertM(k, m_dest);

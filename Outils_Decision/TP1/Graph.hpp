@@ -2,6 +2,7 @@
 #define GRAPH
 
 #include <iostream>
+#include <fstream>
 #include "Constants.hpp"
 
 using namespace std;
@@ -17,7 +18,7 @@ class Graph
 private:
     int n;                              // nb de sommets
     int S[nmax_sommets + 1][nmax_succ]; // successeurs
-    int l[nmax_sommets + 1][nmax_succ]; // poids
+    float l[nmax_sommets + 1][nmax_succ]; // poids
     int ns[nmax_sommets + 1];           // nb de successeurs
 
 public:
@@ -29,10 +30,10 @@ public:
     int getN();
     void setN(int new_n);
     void insertS(int i, int j, int val);
-    void insertL(int i, int j, int val);
+    void insertL(int i, int j, float val);
     void insertNS(int i, int val);
     int getS(int i, int j);
-    int getL(int i, int j);
+    float getL(int i, int j);
     int getNS(int i);
 };
 
