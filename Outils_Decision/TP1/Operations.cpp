@@ -97,10 +97,10 @@ void createGraph(Graph& G)
 void applyBellman(Graph& G, const int* ordre, Solution& sol)
 {
     bool stop = true;
-    sol.insertM(ordre[1], 0);
+    sol.insertM(ordre[1], 0.);
     sol.insertPere(ordre[1], -1);
     for (int k = 2; k <= nmax_sommets; k++)
-        sol.insertM(k, inf);
+        sol.insertM(k, (float) inf);
     while (stop)
     {
         stop = false;
@@ -113,7 +113,7 @@ void applyBellman(Graph& G, const int* ordre, Solution& sol)
             for (int j = 1; j <= nb_succ; j++)
             {
                 int k = G.getS(imin, j);
-                int m_dest = sol.getM(imin) + G.getL(imin, j);
+                float m_dest = sol.getM(imin) + G.getL(imin, j);
                 if (m_dest < sol.getM(k))
                 {
                     sol.insertM(k, m_dest);

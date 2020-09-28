@@ -143,6 +143,7 @@
     <ClCompile Include="Operations.cpp" />
     <ClCompile Include="Solution.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Tests.cpp" />
     <ClCompile Include="TP1.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +152,7 @@
     <ClInclude Include="Header.h" />
     <ClInclude Include="Operations.hpp" />
     <ClInclude Include="Solution.hpp" />
+    <ClInclude Include="Tests.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DLP_210.dat" />
