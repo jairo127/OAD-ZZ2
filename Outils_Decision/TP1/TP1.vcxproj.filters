@@ -73,5 +73,8 @@
     <None Include="graph_p2">
       <Filter>Fichiers de ressources</Filter>
     </None>
+    <None Include="graph_travaux">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
   </ItemGroup>
 </Project>

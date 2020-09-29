@@ -29,7 +29,7 @@ Graph::Graph(string file_path)
 			}
 			ns[i] = nb_s;
 		}
-		cout << "Lecture sommets done !" << endl;
+		// cout << "Lecture sommets done !" << endl;
 		file >> nb_arc;
 		int arc_courant = 0;
 		while (arc_courant < nb_arc)

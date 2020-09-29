@@ -1,6 +1,7 @@
 #ifndef SOLUTION
 #define SOLUTION
 
+#include <iostream>
 #include "Constants.hpp"
 
 /**
@@ -23,6 +24,7 @@ public:
 	float getM(int i);
 	int getPere(int i);
 	int getNiv(int i);
+	float chemin_le_plus_court(int deb, int fin, bool display);
 };
 
 #endif;

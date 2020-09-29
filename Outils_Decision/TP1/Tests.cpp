@@ -61,3 +61,77 @@ void test_file_bellman_special()
     displaySolution(1, 210, sol, false);
     cout << __FUNCTION__ << " done!" << endl;
 }
+
+void test_plus_court_chemin()
+{
+    Graph G = Graph("graph_p2");
+    Solution sol;
+    applyDijkstra(G, 1, 210, sol);
+    sol.chemin_le_plus_court(1, 210, true);
+    cout << __FUNCTION__ << " done!" << endl;
+}
+
+void test_perf_dijkstra()
+{
+    int iter = 2000;
+    long temps = 0;
+    Graph G = Graph("graph_p2");
+    Solution sol;
+    for (int i = 0; i < iter; i++)
+    {
+        std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+        applyDijkstra(G, 1, 210, sol);
+        std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+        temps += std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count(); // [µs]
+    }
+    std::cout << "Temps moyen Dijkstra : " << temps / iter << " microsecondes" << std::endl;
+    cout << __FUNCTION__ << " done!" << endl;
+}
+
+void test_perf_bellman()
+{
+    int iter = 2000;
+    long temps = 0;
+    Graph G = Graph("graph_p2");
+    Solution sol;
+    
+    int ordre[nmax_sommets];
+    // Ordre croissant
+    for (int i = 1; i <= 210; i++)
+        ordre[i] = i;
+    
+    // Test perf sur ordre croissant
+    for (int i = 0; i < iter; i++)
+    {
+        std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+        applyBellman(G, ordre, sol);
+        std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+        temps += std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count(); // [µs]
+    }
+    std::cout << "Temps moyen Bellman (croissant) : " << temps / iter << " microsecondes" << std::endl;
+
+    temps = 0;
+    // Ordre décroissant
+    for (int i = 1; i <= 210; i++)
+        ordre[i] = 211 - i;
+    
+    // Test perf sur ordre décroissant
+    for (int i = 0; i < iter; i++)
+    {
+        std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+        applyBellman(G, ordre, sol);
+        std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+        temps += std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count(); // [µs]
+    }
+    std::cout << "Temps moyen Bellman (decroissant) : " << temps / iter << " microsecondes" << std::endl;
+    cout << __FUNCTION__ << " done!" << endl;
+}
+
+void test_dates_plus_tot()
+{
+    Graph G = Graph("graph_travaux");
+    Solution sol;
+    applyPlusTard(G, 1, 14, sol);
+    displaySolution(1, 14, sol, false);
+    cout << __FUNCTION__ << " done!" << endl;
+}

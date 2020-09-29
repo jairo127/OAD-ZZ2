@@ -151,7 +151,7 @@ void applyDijkstra(Graph& G, const int start, const int end, Solution& sol)
                 imin = j;
             }
         }
-        cout << "Sommet en cours de traitement = " << imin << endl;
+        // cout << "Sommet en cours de traitement = " << imin << endl;
         // mettre à jour tous les successeurs de imin
         int nb_succ = G.getNS(imin);
         for (int j = 1; j <= nb_succ; j++)
@@ -165,6 +165,48 @@ void applyDijkstra(Graph& G, const int start, const int end, Solution& sol)
             }
         }
         T[imin] = 1;
+    }
+}
+
+void applyPlusTard(Graph& G, const int start, const int end, Solution& sol)
+{
+    // Initialisation
+    int T[nmax_sommets + 1];
+    sol.insertM(start, 0);
+    for (int k = 2; k <= nmax_sommets; k++)
+        sol.insertM(k, -1);
+    for (int k = 0; k <= nmax_sommets; k++) {
+        T[k] = 0;
+        sol.insertPere(k, 0);
+    }
+
+
+    for (int i = start; i <= end; i++) {
+        // recherche sommet marque la plus grande
+        float max = 0;
+        int imax = 0;
+        for (int j = 1; j <= G.getN(); j++)
+        {
+            if ((sol.getM(j) >= max) && (T[j] == 0))
+            {
+                max = sol.getM(j);
+                imax = j;
+            }
+        }
+        cout << "Sommet en cours de traitement = " << imax << endl;
+        // mettre à jour tous les successeurs de imin
+        int nb_succ = G.getNS(imax);
+        for (int j = 1; j <= nb_succ; j++)
+        {
+            int k = G.getS(imax, j);
+            float m_dest = sol.getM(imax) + G.getL(imax, j);
+            if (m_dest < sol.getM(k))
+            {
+                sol.insertM(k, m_dest);
+                sol.insertPere(k, imax);
+            }
+        }
+        T[imax] = 1;
     }
 }
 

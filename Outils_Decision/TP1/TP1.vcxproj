@@ -157,6 +157,7 @@
   <ItemGroup>
     <None Include="DLP_210.dat" />
     <None Include="graph_p2" />
+    <None Include="graph_travaux" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
