@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Console-Application", "Cons
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Job-Shop-Lib", "Job-Shop-Lib\Job-Shop-Lib.vcxproj", "{C771F861-5274-4D96-B11C-5BE2EA9119CE}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HVRP-Lib", "HVRP-Lib\HVRP-Lib.vcxproj", "{245CABF5-BAC1-4241-8F00-0ED8D9901DAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,14 @@ Global
 		{C771F861-5274-4D96-B11C-5BE2EA9119CE}.Release|x64.Build.0 = Release|x64
 		{C771F861-5274-4D96-B11C-5BE2EA9119CE}.Release|x86.ActiveCfg = Release|Win32
 		{C771F861-5274-4D96-B11C-5BE2EA9119CE}.Release|x86.Build.0 = Release|Win32
+		{245CABF5-BAC1-4241-8F00-0ED8D9901DAB}.Debug|x64.ActiveCfg = Debug|x64
+		{245CABF5-BAC1-4241-8F00-0ED8D9901DAB}.Debug|x64.Build.0 = Debug|x64
+		{245CABF5-BAC1-4241-8F00-0ED8D9901DAB}.Debug|x86.ActiveCfg = Debug|Win32
+		{245CABF5-BAC1-4241-8F00-0ED8D9901DAB}.Debug|x86.Build.0 = Debug|Win32
+		{245CABF5-BAC1-4241-8F00-0ED8D9901DAB}.Release|x64.ActiveCfg = Release|x64
+		{245CABF5-BAC1-4241-8F00-0ED8D9901DAB}.Release|x64.Build.0 = Release|x64
+		{245CABF5-BAC1-4241-8F00-0ED8D9901DAB}.Release|x86.ActiveCfg = Release|Win32
+		{245CABF5-BAC1-4241-8F00-0ED8D9901DAB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
