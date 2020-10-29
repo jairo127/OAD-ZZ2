@@ -55,38 +55,39 @@ void BierwithVector::Generer_Aleatoirement(Instance& inst)
 
 void BierwithVector::Evaluer(Instance& inst)
 {
-	const int n = inst.n * inst.m;
-	int np[nmax * mmax];
-	Tuple mp[nmax * mmax];
-	for (int i = 1; i <= n; i++)
+	// const int n = inst.n * inst.m; 
+	int np[nmax];
+	Tuple mp[nmax];
+	for (int i = 1; i <= inst.n; i++)
 	{
 		np[i] = 0;
 		mp[i] = Tuple();
 	}
-	for (int i = 0; i < nmax + 1; i++)
-		for (int j = 0; j < mmax + 1; j++)
+	for (int i = 0; i <= nmax; i++)
+		for (int j = 0; j <= mmax; j++)
 			St[i][j] = infinite;
+
 	St[0][0] = 0;
 	// cout = 0; (fait en auto dans le constructeur)
 
-	for (int i = 1; i <= n; i++)
+	for (int i = 1; i <= inst.n; i++)
 	{
-		int j = V[i];
+		int j = V[i]; // j = Lambda[i]
 		np[j]++;
 		int mc = inst.M[j][np[j]];
-		// cas première lecture lambda ?
+		// ... cas première lecture lambda ?
 		if (np[j] > 1)
 		{
 			int deb_prec = St[j][np[j] - 1];
 			int fin_prec = deb_prec + inst.P[j][np[j] - 1];
 			if (fin_prec > St[j][np[j]])
-				St[j][np[j]] = fin_prec;
+				St[j][np[j]] = fin_prec; // maj père ?
 		}
-		if (mp[mc].i <= -1 && mp[mc].j <= -1)
+		if (mp[mc].i > -1 && mp[mc].j > -1)
 		{
 			int pc = mp[mc].i;
 			int rc = mp[mc].j;
-			if (St[pc][rc] + inst.P[pc][rc] > St[j][np[j]]) // sa gueule mais c'est normal... ca explose au final
+			if (St[pc][rc] + inst.P[pc][rc] > St[j][np[j]]) // ça gueule mais c'est normal... ça explose au final
 			{
 				St[j][np[j]] = St[pc][rc] + inst.P[pc][rc];
 				// Pere[j][np[j]] =  maj père ?
@@ -103,4 +104,5 @@ void BierwithVector::AfficherVecteur()
 	for (int i = 0; i < nb; i++)
 		std::cout << V[i] << " ";
 	std::cout << std::endl;
+	std::cout << "Cout : " << cout << std::endl;
 }

@@ -36,5 +36,6 @@ void Test_Eval_Vecteur()
 	la01.Afficher();
 	vector.Generer_Aleatoirement(la01);
 	vector.Evaluer(la01);
+	vector.AfficherVecteur();
 	std::cout << "DONE!" << std::endl;
 }
