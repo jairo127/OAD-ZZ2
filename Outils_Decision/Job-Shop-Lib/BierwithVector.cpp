@@ -55,13 +55,14 @@ void BierwithVector::Generer_Aleatoirement(Instance& inst)
 
 void BierwithVector::Evaluer(Instance& inst)
 {
-	// const int n = inst.n * inst.m; 
-	int np[nmax];
-	Tuple mp[nmax];
-	for (int i = 1; i <= inst.n; i++)
+	const int n = inst.n * inst.m; 
+	int np[nmax*mmax +1];
+	Tuple mp[nmax*mmax +1];
+
+	for (int i = 1; i <= n; i++) // parcourir le vecteur
 	{
-		np[i] = 0;
-		mp[i] = Tuple();
+		np[i] = 0; //compteur pièce
+		mp[i] = Tuple(); //n° de l'opération passée avant sur la machine i
 	}
 	for (int i = 0; i <= nmax; i++)
 		for (int j = 0; j <= mmax; j++)
@@ -70,16 +71,25 @@ void BierwithVector::Evaluer(Instance& inst)
 	St[0][0] = 0;
 	// cout = 0; (fait en auto dans le constructeur)
 
-	for (int i = 1; i <= inst.n; i++)
+	for (int i = 1; i < n; i++)
 	{
 		int j = V[i]; // j = Lambda[i]
 		np[j]++;
-		int mc = inst.M[j][np[j]];
+		int mc = inst.M[j][np[j]]; //
 		// ... cas première lecture lambda ?
+
 		if (np[j] > 1)
 		{
 			int deb_prec = St[j][np[j] - 1];
 			int fin_prec = deb_prec + inst.P[j][np[j] - 1];
+			if (fin_prec > St[j][np[j]])
+				St[j][np[j]] = fin_prec; // maj père ?
+		}
+		else // premère lecture de la piece ? DE LA BITE OSKOUR ALED SI grzgsdgfsdgfrzgswgfdsw :-)
+
+		{
+			int deb_prec = 0;
+			int fin_prec = inst.P[j][np[j] - 1];
 			if (fin_prec > St[j][np[j]])
 				St[j][np[j]] = fin_prec; // maj père ?
 		}
