@@ -1,16 +1,16 @@
 #include "pch.h"
 #include "BierwithVector.h"
 #include <chrono>
-#include "Tuple.h"
 
 BierwithVector::BierwithVector() : nb(0), cout(0)
 {
 	for (int i = 0; i <= nmax * mmax - 1; i++)
-		V[i] = 0;
-	for (int i = 0; i <= nmax; i++) {
-		for (int j = 0; j <= mmax; j++) {
+		V[i] = -1; // si c'est moins 1, il y a un pb
+
+	for (int i = 0; i < nmax; i++) {
+		for (int j = 0; j < mmax; j++) {
 			St[i][j] = 0;
-			Pere[i][j] = 0;
+			Pere[i][j] = Tuple();
 		}
 	}
 }
@@ -53,59 +53,138 @@ void BierwithVector::Generer_Aleatoirement(Instance& inst)
 
 }
 
+//void BierwithVector::Evaluer(Instance& inst)
+//{
+//	const int n = inst.n * inst.m; 
+//	int np[nmax*mmax +1]; //compteur d'appartion du job
+//	Tuple mp[nmax*mmax +1]; //initialisé à -1 -1 : les pères
+//
+//	for (int i = 1; i <= n; i++) // De 1 à n inclus!
+//	{
+//		np[i] = 0; //compteur d'appartion du job à 0
+//		mp[i] = Tuple(); //n° de l'opération passée avant sur la machine i
+//	}
+//
+//	for (int i = 0; i <= nmax; i++)
+//		for (int j = 0; j <= mmax; j++)
+//			St[i][j] = infinite; // mise à 0 des st
+//
+//	St[0][0] = 0;
+//	// cout = 0; (fait en auto dans le constructeur)
+//
+//
+//	for (int i = 0; i < n; i++) // accès vecteur de 1 à n-1 -> changé de 0 à n-1 
+//	{
+//		int j = V[i]; // j = Lambda[i]c = num du job
+//		np[j]++; // aug compteur du job j = opération
+//		int mc = inst.M[j][np[j]]; //machine utilisée par le job
+//
+//
+//		if (np[j] == 1) // prem op du job // pas de précédent 
+//		{
+//			int deb_prec = 0; // date de op précédente
+//			int fin_prec = inst.P[j][np[j] - 1];
+//			if (fin_prec > St[j][np[j]])
+//				St[j][np[j]] = fin_prec; // maj père ?
+//		}
+//
+//		if (np[j] > 1) // si ce n'est pas la prem op du job
+//		{
+//			int deb_prec = St[j][np[j] - 1];
+//			int fin_prec = deb_prec + inst.P[j][np[j] - 1];
+//			if (fin_prec > St[j][np[j]])
+//				St[j][np[j]] = fin_prec; // maj père ?
+//		}
+//
+//		if (mp[mc].i != -1 && mp[mc].j != -1) // disjonctif ?
+//		{
+//			int pc = mp[mc].i; // p_cour
+//			int rc = mp[mc].j; // r_cour
+//
+//			if (St[pc][rc] + inst.P[pc][rc] > St[j][np[j]]) // si le nv temps est supérieur 
+//			{
+//				St[j][np[j]] = St[pc][rc] + inst.P[pc][rc];
+//
+//				// Pere[j][np[j]] =  maj père ?
+//				if (St[j][np[j]] > cout)
+//					cout = St[j][np[j]];
+//			}
+//		}
+//		//mp[mc] = Tuple(j, np[j]);
+//	}
+//}
+
 void BierwithVector::Evaluer(Instance& inst)
 {
-	const int n = inst.n * inst.m; 
-	int np[nmax*mmax +1];
-	Tuple mp[nmax*mmax +1];
+	int N = inst.n * inst.m;
+	int np[nmax]; //compteur d'appartion du job
+	Tuple mp[nmax * mmax]; //initialisé à -1 -1 : opération précédente (j = identifient job ; i = numéro opération pour job j)
 
-	for (int i = 1; i <= n; i++) // parcourir le vecteur
+	for (int i = 0; i < nmax; i++) // De 1 à N inclus!
 	{
-		np[i] = 0; //compteur pièce
+		np[i] = 0; //compteur d'appartion du job à 0
 		mp[i] = Tuple(); //n° de l'opération passée avant sur la machine i
 	}
-	for (int i = 0; i <= nmax; i++)
-		for (int j = 0; j <= mmax; j++)
-			St[i][j] = infinite;
+
+	for (int i = 0; i < nmax; i++)
+		for (int j = 0; j < mmax; j++)
+			St[i][j] = -infinite; // mise à 0 des st
 
 	St[0][0] = 0;
-	// cout = 0; (fait en auto dans le constructeur)
 
-	for (int i = 1; i < n; i++)
+	//////////////////////////////////////<<init>>
+	//main loop for eval
+	for (int i = 0; i < N; i++)
 	{
-		int j = V[i]; // j = Lambda[i]
-		np[j]++;
-		int mc = inst.M[j][np[j]]; //
-		// ... cas première lecture lambda ?
+		int job = V[i]; // j = Lambda[i] = id du job traité dans le vecteur
+		np[job]++; //increm compteur opé pour job 
+		int machine_courante = inst.M[job][np[job]]; //machine utilisée par le job
+		/*std::cout << "penis externe";*/
 
-		if (np[j] > 1)
-		{
-			int deb_prec = St[j][np[j] - 1];
-			int fin_prec = deb_prec + inst.P[j][np[j] - 1];
-			if (fin_prec > St[j][np[j]])
-				St[j][np[j]] = fin_prec; // maj père ?
-		}
-		else // premère lecture de la piece ? DE LA BITE OSKOUR ALED SI grzgsdgfsdgfrzgswgfdsw :-)
+		St[job][np[job]] = 0; //copie code de henry, utile ??
 
+		if (np[job] > 1) // si ce n'est pas la prem op du job
 		{
-			int deb_prec = 0;
-			int fin_prec = inst.P[j][np[j] - 1];
-			if (fin_prec > St[j][np[j]])
-				St[j][np[j]] = fin_prec; // maj père ?
-		}
-		if (mp[mc].i > -1 && mp[mc].j > -1)
-		{
-			int pc = mp[mc].i;
-			int rc = mp[mc].j;
-			if (St[pc][rc] + inst.P[pc][rc] > St[j][np[j]]) // ça gueule mais c'est normal... ça explose au final
+			int deb_prec = St[job][np[job] - 1]; // St de opé préc du job
+			int fin_prec = deb_prec + inst.P[job][np[job]-1]; //date fin opé précédente
+
+			if (fin_prec > St[job][np[job]])
 			{
-				St[j][np[j]] = St[pc][rc] + inst.P[pc][rc];
-				// Pere[j][np[j]] =  maj père ?
-				if (St[j][np[j]] > cout)
-					cout = St[j][np[j]];
+				St[job][np[job]] = fin_prec;
+				Pere[job][np[job]] = Tuple(job, np[job] - 1);
+
+				if (np[job] == inst.m) //si c'est la dernière opération du job
+				{
+					if (St[job][np[job]] + inst.P[job][np[job]] > cout)
+					{
+						cout = St[job][np[job]] + inst.P[job][np[job]];
+						Pere[inst.n][inst.m] = Tuple(job, inst.m - 1);
+					}
+				}
 			}
 		}
-		mp[mc] = Tuple(j, np[j]);
+
+		//partie disjonctive
+		if (mp[machine_courante].i != -1 && mp[machine_courante].j != -1) // réécrire pour un tuple
+		{
+			Tuple t_cour = mp[machine_courante];
+
+			if (St[t_cour.j][t_cour.i] + inst.P[t_cour.j][t_cour.i] > St[job][np[job]])
+			{
+				St[job][np[job]] = St[t_cour.j][t_cour.i] + inst.P[t_cour.j][t_cour.i];
+				Pere[job][np[job]] = t_cour;
+
+				if (np[job] == inst.m)// -1 enlevé ici !!!!!
+				{
+					if (St[job][np[job]] + inst.P[job][np[job]] > cout)
+					{
+						cout = St[job][np[job]] + inst.P[job][np[job]];
+						Pere[inst.n][inst.m] = t_cour;
+					}
+				}
+			}
+		}
+		mp[machine_courante] = Tuple(job, np[job]);
 	}
 }
 
@@ -114,5 +193,10 @@ void BierwithVector::AfficherVecteur()
 	for (int i = 0; i < nb; i++)
 		std::cout << V[i] << " ";
 	std::cout << std::endl;
+	
+}
+
+void BierwithVector::AfficherCout()
+{
 	std::cout << "Cout : " << cout << std::endl;
 }

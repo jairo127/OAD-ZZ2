@@ -7,8 +7,8 @@ Instance::Instance() : n(0), m(0)
 	name = "NAME_NULL";
 	for (int i = 0; i <= nmax; i++) {
 		for (int j = 0; j <= mmax; j++) {
-			M[i][j] = -1;
-			P[i][j] = -1;
+			M[i][j] = 0;
+			P[i][j] = 0;
 		}
 	}	
 }

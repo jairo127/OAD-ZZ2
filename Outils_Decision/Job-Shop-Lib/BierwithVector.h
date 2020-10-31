@@ -1,14 +1,15 @@
 #pragma once
 #include "Constantes.h"
 #include "Instance.h"
+#include "Tuple.h"
 #include <random>
 
 class BierwithVector
 {
 public:
 	int V[nmax * mmax];
-	int St[nmax + 1][mmax + 1];
-	int Pere[nmax + 1][mmax + 1];
+	int St[nmax][mmax];
+	Tuple Pere[nmax][mmax];
 	int nb;
 	int cout;
 
@@ -20,5 +21,7 @@ public:
 	void Evaluer(Instance& inst);
 	// Affichage d'un vecteur de Bierwith
 	void AfficherVecteur();
+	// Afficher Cout après avoir évalué
+	void AfficherCout();
 };
 

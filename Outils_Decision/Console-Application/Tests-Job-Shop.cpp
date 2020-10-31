@@ -35,7 +35,8 @@ void Test_Eval_Vecteur()
 	la01.Lecture("DataSet/La01");
 	la01.Afficher();
 	vector.Generer_Aleatoirement(la01);
-	vector.Evaluer(la01);
 	vector.AfficherVecteur();
+	vector.Evaluer(la01);
+	vector.AfficherCout();
 	std::cout << "DONE!" << std::endl;
 }

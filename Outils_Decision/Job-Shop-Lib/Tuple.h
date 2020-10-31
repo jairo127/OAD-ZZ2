@@ -2,8 +2,8 @@
 class Tuple
 {
 	public:
-		int i;
-		int j;
+		int j;//job
+		int i;//num d'opé
 		Tuple();
 		Tuple(int i, int j);
 };
