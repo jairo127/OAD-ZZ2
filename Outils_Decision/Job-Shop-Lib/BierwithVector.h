@@ -19,6 +19,8 @@ public:
 	void Generer_Aleatoirement(Instance &inst);
 	// Evaluation de l'instance pour ce vecteur
 	void Evaluer(Instance& inst);
+	// Procédure de recherche locale
+	void Recherche_Locale(Instance& inst, int iter_max); // chaussette
 	// Affichage d'un vecteur de Bierwith
 	void AfficherVecteur();
 	// Afficher Cout après avoir évalué

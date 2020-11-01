@@ -58,3 +58,17 @@ void Test_Eval_Multiple()
 	
 	std::cout << "DONE!" << std::endl;
 }
+
+void Test_Recherche_Locale()
+{
+	Instance la01;
+	BierwithVector vector;
+	
+	la01.Lecture("DataSet/La01");
+	la01.Afficher();
+
+	vector.Generer_Aleatoirement(la01);
+	vector.Recherche_Locale(la01, 100);
+
+	std::cout << "DONE!" << std::endl;
+}

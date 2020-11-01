@@ -53,67 +53,6 @@ void BierwithVector::Generer_Aleatoirement(Instance& inst)
 
 }
 
-//void BierwithVector::Evaluer(Instance& inst)
-//{
-//	const int n = inst.n * inst.m; 
-//	int np[nmax*mmax +1]; //compteur d'appartion du job
-//	Tuple mp[nmax*mmax +1]; //initialisé à -1 -1 : les pères
-//
-//	for (int i = 1; i <= n; i++) // De 1 à n inclus!
-//	{
-//		np[i] = 0; //compteur d'appartion du job à 0
-//		mp[i] = Tuple(); //n° de l'opération passée avant sur la machine i
-//	}
-//
-//	for (int i = 0; i <= nmax; i++)
-//		for (int j = 0; j <= mmax; j++)
-//			St[i][j] = infinite; // mise à 0 des st
-//
-//	St[0][0] = 0;
-//	// cout = 0; (fait en auto dans le constructeur)
-//
-//
-//	for (int i = 0; i < n; i++) // accès vecteur de 1 à n-1 -> changé de 0 à n-1 
-//	{
-//		int j = V[i]; // j = Lambda[i]c = num du job
-//		np[j]++; // aug compteur du job j = opération
-//		int mc = inst.M[j][np[j]]; //machine utilisée par le job
-//
-//
-//		if (np[j] == 1) // prem op du job // pas de précédent 
-//		{
-//			int deb_prec = 0; // date de op précédente
-//			int fin_prec = inst.P[j][np[j] - 1];
-//			if (fin_prec > St[j][np[j]])
-//				St[j][np[j]] = fin_prec; // maj père ?
-//		}
-//
-//		if (np[j] > 1) // si ce n'est pas la prem op du job
-//		{
-//			int deb_prec = St[j][np[j] - 1];
-//			int fin_prec = deb_prec + inst.P[j][np[j] - 1];
-//			if (fin_prec > St[j][np[j]])
-//				St[j][np[j]] = fin_prec; // maj père ?
-//		}
-//
-//		if (mp[mc].i != -1 && mp[mc].j != -1) // disjonctif ?
-//		{
-//			int pc = mp[mc].i; // p_cour
-//			int rc = mp[mc].j; // r_cour
-//
-//			if (St[pc][rc] + inst.P[pc][rc] > St[j][np[j]]) // si le nv temps est supérieur 
-//			{
-//				St[j][np[j]] = St[pc][rc] + inst.P[pc][rc];
-//
-//				// Pere[j][np[j]] =  maj père ?
-//				if (St[j][np[j]] > cout)
-//					cout = St[j][np[j]];
-//			}
-//		}
-//		//mp[mc] = Tuple(j, np[j]);
-//	}
-//}
-
 void BierwithVector::Evaluer(Instance& inst)
 {
 	int N = inst.n * inst.m;
@@ -186,6 +125,69 @@ void BierwithVector::Evaluer(Instance& inst)
 		}
 		mp[machine_courante] = Tuple(job, np[job]);
 	}
+}
+
+void BierwithVector::Recherche_Locale(Instance& inst, int iter_max)
+{
+	int iter = 0;
+	Evaluer(inst);
+	std::cout << "cout pre-recherche locale = " << cout << std::endl;
+	Tuple last = Pere[inst.m + 1][0]; // dernière ope tout à droite (fictive)
+	Tuple cour = Pere[last.j][last.i]; //dernière opération réelle
+
+	//while (iter <= iter_max && (cour.i != -1 && cour.j != -1))
+	while ((iter <= iter_max) && (last.j != -1) && (Pere[cour.j][cour.i].i != -1))
+	{
+		BierwithVector v_prim = *this; //copie du vecteur actuel
+		//vérifier si arc disjonctif == Job prédécesseur != job successeur
+		if (last.j != cour.j)
+		{
+			int cpt = 0; // compteur
+			int i_cour = 0, i_last = 0;
+			for (int i = 0; i < inst.n*inst.m; i++) // find job cour.j et iter cour.i
+			{
+				if (v_prim.V[i] == cour.j)
+				{
+					if (cpt == cour.i)
+						i_cour = i;
+					else
+						cpt++;
+				}
+			}
+			for (int i = 0; i < inst.n*inst.m; i++) // find job last.j et iter last.i
+			{
+				if (v_prim.V[i] == last.j)
+				{
+					if (cpt == last.i)
+						i_last = i;
+					else
+						cpt++;
+				}
+			}
+
+			int tmp = v_prim.V[i_cour];
+			v_prim.V[i_cour] = v_prim.V[i_last];
+			v_prim.V[i_last] = tmp;
+			// permutation cases c1 et c2 [cour et last]
+			v_prim.Evaluer(inst);
+		}
+		if(v_prim.cout > cout)
+		{
+			*this = v_prim; //passage en hardcopy
+			//std::copy(std::begin(v_prim.V), std::end(v_prim.V), V);
+			
+			last = v_prim.Pere[inst.n + 1][0]; // dernière ope tout à droite (fictive)
+			cour = v_prim.Pere[last.j][last.i]; //dernière opération réelle
+		}
+		else
+		{
+
+			last = cour;
+			cour = Pere[cour.j][cour.i]; // et on descend, yeaaaaah
+		}
+		//std::cout << "iterating"<< std::endl;
+	}
+	std::cout << "cout post-recherche locale = " << cout<< std::endl;
 }
 
 void BierwithVector::AfficherVecteur()
