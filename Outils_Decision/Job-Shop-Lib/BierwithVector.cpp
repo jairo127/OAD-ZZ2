@@ -58,6 +58,7 @@ void BierwithVector::Generer_Aleatoirement(Instance& inst)
 void BierwithVector::Evaluer(Instance& inst)
 {
 	int N = inst.n * inst.m;
+	cout = 0;
 	int np[nmax]; //compteur d'appartion du job
 	Tuple mp[nmax * mmax]; //initialisé à -1 -1 : opération précédente (j = identifient job ; i = numéro opération pour job j)
 
@@ -135,48 +136,44 @@ void BierwithVector::Recherche_Locale(Instance& inst, int iter_max)
 	int iter = 0;
 	Evaluer(inst);
 	std::cout << "cout pre-recherche locale = " << cout << std::endl;
+
 	Tuple last = Pere[inst.m + 1][0]; // dernière ope tout à droite (fictive)
 	Tuple cour = Pere[last.j][last.i]; //dernière opération réelle
 
 	//while (iter <= iter_max && (cour.i != -1 && cour.j != -1))
 	while ((iter <= iter_max) && (last.j != -1) && (Pere[cour.j][cour.i].i != -1))
 	{
-		BierwithVector v_prim = *this; //copie du vecteur actuel
-		//vérifier si arc disjonctif == Job prédécesseur != job successeur
+		// Copie du vecteur actuel
+		BierwithVector v_prim;
+		std::copy(std::begin(V), std::end(V), v_prim.V);
+		v_prim.nb = nb;
+		v_prim.cout = infinite;
+
+		// Vérifier si arc disjonctif -> Job prédécesseur != job successeur
 		if (last.j != cour.j)
 		{
-			int cpt = 0; // compteur
-			int i_cour = 0, i_last = 0;
-			for (int i = 0; i < inst.n*inst.m; i++) // find job cour.j et iter cour.i
-			{
-				if (v_prim.V[i] == cour.j)
-				{
-					if (cpt == cour.i)
-						i_cour = i;
-					else
-						cpt++;
-				}
-			}
-			for (int i = 0; i < inst.n*inst.m; i++) // find job last.j et iter last.i
-			{
-				if (v_prim.V[i] == last.j)
-				{
-					if (cpt == last.i)
-						i_last = i;
-					else
-						cpt++;
-				}
-			}
+			std::cout << "IF Modif" << std::endl;
+			
+			// Recherche des index à permuter
+			int i_cour = v_prim.Recherche(cour.j, cour.i, inst.n * inst.m);
+			int i_last = v_prim.Recherche(last.j, last.i, inst.n * inst.m);
+			std::cout << "i_cour = " << i_cour << ", i_last = " << i_last << std::endl;
 
+			// Permutation des index
 			int tmp = v_prim.V[i_cour];
 			v_prim.V[i_cour] = v_prim.V[i_last];
 			v_prim.V[i_last] = tmp;
-			// permutation cases c1 et c2 [cour et last]
+
+			// Réévaluation
 			v_prim.Evaluer(inst);
+			v_prim.AfficherVecteur();
+			v_prim.AfficherCout();
 		}
-		if(v_prim.cout > cout)
+		if(v_prim.cout < cout)
 		{
+			std::cout << "IF Better" << std::endl;
 			*this = v_prim; //passage en hardcopy
+			std::cout << "maj" << std::endl;
 			//std::copy(std::begin(v_prim.V), std::end(v_prim.V), V);
 			
 			last = v_prim.Pere[inst.n + 1][0]; // dernière ope tout à droite (fictive)
@@ -184,13 +181,36 @@ void BierwithVector::Recherche_Locale(Instance& inst, int iter_max)
 		}
 		else
 		{
-
+			std::cout << "ELSE Better" << std::endl;
 			last = cour;
 			cour = Pere[cour.j][cour.i]; // et on descend, yeaaaaah
 		}
+		iter++;
 		//std::cout << "iterating"<< std::endl;
 	}
 	std::cout << "cout post-recherche locale = " << cout<< std::endl;
+}
+
+int BierwithVector::Recherche(int j, int i, int N)
+{
+	int cpt = 0; // compteur
+	int index = 0;
+	for (int k = 0; k < N; k++)
+	{
+		if (V[k] == j)
+		{
+			if (cpt == i)
+			{
+				index = k;
+				break;
+			}
+			else
+			{
+				cpt++;
+			}
+		}
+	}
+	return index;
 }
 
 void BierwithVector::AfficherVecteur()

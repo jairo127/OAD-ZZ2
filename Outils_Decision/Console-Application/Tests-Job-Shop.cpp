@@ -76,12 +76,15 @@ void Test_Recherche_Locale()
 void Test_La00()
 {
 	Instance la00;
-	la00.Lecture("DataSet/La00.txt");
+	la00.Lecture("DataSet/La01");
 	la00.Afficher();
 
 	BierwithVector vector;
 	vector.Generer_Aleatoirement(la00);
 	vector.AfficherVecteur();
 	vector.Evaluer(la00);
-	vector.AfficherCout();
+	//vector.AfficherCout();
+	vector.Recherche_Locale(la00, 2000);
+	//vector.AfficherVecteur();
+	//vector.AfficherCout();
 }
