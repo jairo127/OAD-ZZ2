@@ -29,7 +29,9 @@ void BierwithVector::Generer_Aleatoirement(Instance& inst)
 
 	default_random_engine generator;
 	// random seed
-	generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
+	//generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
+	// fixed seed
+	generator.seed(0);
 	uniform_int_distribution<int> distrib(1, lim); // Génére le i de val[i]
 
 	// Tant qu'il reste une piece à insérer

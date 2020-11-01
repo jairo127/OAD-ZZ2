@@ -6,3 +6,4 @@ void Test_Gen_Vecteurs();
 void Test_Eval_Vecteur();
 void Test_Eval_Multiple();
 void Test_Recherche_Locale();
+void Test_La00();

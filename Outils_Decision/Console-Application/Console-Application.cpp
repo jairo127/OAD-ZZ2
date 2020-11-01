@@ -8,7 +8,8 @@ int main()
 	//Test_Gen_Vecteurs(); */
 	//Test_Eval_Vecteur();
 	//Test_Eval_Multiple();
-	Test_Recherche_Locale();
+	//Test_Recherche_Locale();
+	Test_La00();
 
 	/* HVRP */
 	return 0;

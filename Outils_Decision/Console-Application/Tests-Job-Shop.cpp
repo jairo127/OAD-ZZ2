@@ -45,7 +45,7 @@ void Test_Eval_Multiple()
 {
 	Instance la01;
 	BierwithVector vectors[10];
-	la01.Lecture("DataSet/La01");
+	la01.Lecture("DataSet/La02");
 	la01.Afficher();
 
 	for (int i = 0; i<10; i++)
@@ -71,4 +71,17 @@ void Test_Recherche_Locale()
 	vector.Recherche_Locale(la01, 100);
 
 	std::cout << "DONE!" << std::endl;
+}
+
+void Test_La00()
+{
+	Instance la00;
+	la00.Lecture("DataSet/La00.txt");
+	la00.Afficher();
+
+	BierwithVector vector;
+	vector.Generer_Aleatoirement(la00);
+	vector.AfficherVecteur();
+	vector.Evaluer(la00);
+	vector.AfficherCout();
 }
