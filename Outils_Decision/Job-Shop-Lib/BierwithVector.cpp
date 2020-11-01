@@ -139,10 +139,10 @@ void BierwithVector::Evaluer(Instance& inst)
 		int job = V[i]; // j = Lambda[i] = id du job traité dans le vecteur
 		np[job]++; //increm compteur opé pour job 
 		int machine_courante = inst.M[job][np[job]]; //machine utilisée par le job
-		/*std::cout << "penis externe";*/
 
-		St[job][np[job]] = 0; //copie code de henry, utile ??
+		St[job][np[job]] = 0;
 
+		//partie conjonctive du graph
 		if (np[job] > 1) // si ce n'est pas la prem op du job
 		{
 			int deb_prec = St[job][np[job] - 1]; // St de opé préc du job
@@ -174,7 +174,7 @@ void BierwithVector::Evaluer(Instance& inst)
 				St[job][np[job]] = St[t_cour.j][t_cour.i] + inst.P[t_cour.j][t_cour.i];
 				Pere[job][np[job]] = t_cour;
 
-				if (np[job] == inst.m)// -1 enlevé ici !!!!!
+				if (np[job] == inst.m)
 				{
 					if (St[job][np[job]] + inst.P[job][np[job]] > cout)
 					{

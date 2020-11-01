@@ -40,3 +40,21 @@ void Test_Eval_Vecteur()
 	vector.AfficherCout();
 	std::cout << "DONE!" << std::endl;
 }
+
+void Test_Eval_Multiple()
+{
+	Instance la01;
+	BierwithVector vectors[10];
+	la01.Lecture("DataSet/La01");
+	la01.Afficher();
+
+	for (int i = 0; i<10; i++)
+	{ 
+	vectors[i].Generer_Aleatoirement(la01);
+	vectors[i].AfficherVecteur();
+	vectors[i].Evaluer(la01);
+	vectors[i].AfficherCout();
+	}
+	
+	std::cout << "DONE!" << std::endl;
+}
