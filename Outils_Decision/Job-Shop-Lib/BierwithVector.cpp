@@ -99,7 +99,8 @@ void BierwithVector::Evaluer(Instance& inst)
 					if (St[job][np[job]] + inst.P[job][np[job]] > cout)
 					{
 						cout = St[job][np[job]] + inst.P[job][np[job]];
-						Pere[inst.n][inst.m] = Tuple(job, inst.m - 1);
+						Pere[job][inst.m] = Tuple(job, inst.m - 1);
+						Pere[inst.n + 1][0] = Tuple(job, inst.m);
 					}
 				}
 			}
