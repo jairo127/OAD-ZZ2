@@ -13,7 +13,7 @@ public:
 	/// <summary>
 	/// Cout de la tournée actuelle
 	/// </summary>
-	int cout_total;
+	float cout_total;
 
 	/// <summary>
 	/// Constructeur par défaut

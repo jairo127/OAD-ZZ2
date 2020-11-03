@@ -39,4 +39,3 @@ public:
 	/// <returns>true si la solution est correcte sinon false</returns>
 	bool check_solution(Instance inst);
 };
-
