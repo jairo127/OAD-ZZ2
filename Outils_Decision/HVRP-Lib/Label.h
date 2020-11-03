@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "Instance.h"
 
 class Label
 {
@@ -18,6 +19,13 @@ public:
 	/// Constructeur par défaut
 	/// </summary>
 	Label();
+
+	/// <summary>
+	/// Constructeur de label en fonction d'une instance
+	/// A utiliser de préférence !
+	/// </summary>
+	/// <param name="inst">Instance de référence</param>
+	Label(Instance inst);
 
 	/// <summary>
 	/// Compare ce label à un label l
