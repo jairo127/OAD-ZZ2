@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Tests-Job-Shop.h"
+#include "Tests_Hrvp.h"
 
 int main()
 {
@@ -9,8 +10,9 @@ int main()
 	//Test_Eval_Vecteur();
 	//Test_Eval_Multiple();
 	//Test_Recherche_Locale();
-	Test_La00();
+	//Test_La00();
 
 	/* HVRP */
+	H_test_lecture();
 	return 0;
 }
