@@ -71,7 +71,7 @@ void BierwithVector::Generer_Aleatoirement(Instance& inst)
 
 void BierwithVector::Evaluer(Instance& inst)
 {
-	int N = inst.n * inst.m;
+	int N = inst.n * inst.m; // déjà stocké dans le vecteur
 	cout = 0;
 	int np[nmax]; //compteur d'appartion du job
 	Tuple mp[nmax * mmax]; //initialisé à -1 -1 : opération précédente (j = identifient job ; i = numéro opération pour job j)
@@ -92,6 +92,8 @@ void BierwithVector::Evaluer(Instance& inst)
 	//main loop for eval
 	for (int i = 0; i < N; i++)
 	{
+		//Quelles sont les limites de instance.M , instance.P ,  V, St et Pere...
+
 		int job = V[i]; // j = Lambda[i] = id du job traité dans le vecteur
 		np[job]++; //increm compteur opé pour job 
 		int machine_courante = inst.M[job][np[job]]; //machine utilisée par le job
@@ -101,12 +103,12 @@ void BierwithVector::Evaluer(Instance& inst)
 		//partie conjonctive du graph
 		if (np[job] > 1) // si ce n'est pas la prem op du job
 		{
-			int deb_prec = St[job][np[job] - 1]; // St de opé préc du job
+			int deb_prec = St[job][np[job] - 1]; // St de opé préc du job //ok, il y aura tj une op préc
 			int fin_prec = deb_prec + inst.P[job][np[job]-1]; //date fin opé précédente
 
-			if (fin_prec > St[job][np[job]])
+			if (fin_prec > St[job][np[job]]) // on regarde si la fin de l'opé prec est sup au ST de ce job
 			{
-				St[job][np[job]] = fin_prec;
+				St[job][np[job]] = fin_prec; // on corrige le st pour ce job
 				Pere[job][np[job]] = Tuple(job, np[job] - 1);
 
 				if (np[job] == inst.m) //si c'est la dernière opération du job
