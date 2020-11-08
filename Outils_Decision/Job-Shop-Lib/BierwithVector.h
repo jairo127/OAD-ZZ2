@@ -27,5 +27,8 @@ public:
 	void AfficherVecteur();
 	// Afficher Cout après avoir évalué
 	void AfficherCout();
+	// Calculer le hash du vecteur
+	int CalcHash(Instance& inst);
+
 };
 

@@ -20,5 +20,9 @@ public:
 	void Lecture(std::string nom_fichier);
 	// Fonction d'affichage d'un instance LaXXX
 	void Afficher();
+
+	// GRASP
+	void Grasp(int iterMax);
+
 };
 

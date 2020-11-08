@@ -88,3 +88,12 @@ void Test_La00()
 	//vector.AfficherVecteur();
 	//vector.AfficherCout();
 }
+
+void TestGrasp(int valeur)
+{
+	Instance la01;
+	la01.Lecture("DataSet/La01");
+	la01.Afficher();
+	la01.Grasp(valeur);
+
+}
