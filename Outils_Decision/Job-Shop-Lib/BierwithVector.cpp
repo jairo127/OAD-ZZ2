@@ -104,11 +104,12 @@ void BierwithVector::Evaluer(Instance& inst)
 	for (int i = 0; i < N; i++)
 	{
 
-
 		int job = V[i]; // j = Lambda[i] = id du job traité dans le vecteur
 
 		np[job]++; //increm compteur opé pour job 
 
+		if (np[job] == 5)
+			int aa = 4;
 		//err : np populé avec les valeurs trop élevées
 		int machine_courante = inst.M[job][np[job]]; //machine utilisée par le job
 
