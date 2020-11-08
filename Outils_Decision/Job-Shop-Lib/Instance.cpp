@@ -57,3 +57,15 @@ void Instance::Afficher()
 	}
 	cout << endl;
 }
+
+
+//void 
+//recherche globale : GRASP (Greedy randomized adaptive search procedure
+
+//on choisit une solution et on l'évalue + on applique la recheche locale dessus
+
+//on génére 10 solutions similaires (une seule permutation pour chacune)
+//on applique la recherche locale aux 10 solutions
+//on s'assure que les solutions similaires sont différentes du père avec un HASH
+
+//on garde la meilleure des solutions générées (même si elle est moins bonne que le père
