@@ -2,15 +2,20 @@
 #include "Instance.h"
 #include <fstream>
 
-Instance::Instance() : n(0), m(0)
+
+
+// Permet de créer une instance vide. 
+//Bien en théorie, mais surface supplém pour les bugs.
+//+ init tout à 0  peut rendre silencieux des bugs !
+Instance::Instance() : n(0), m(0) 
 {
-	name = "NAME_NULL";
-	for (int i = 0; i <= nmax; i++) {
-		for (int j = 0; j <= mmax; j++) {
-			M[i][j] = 0;
-			P[i][j] = 0;
-		}
-	}	
+	name = "NAME_NULL"; 
+	//for (int i = 0; i < nmax; i++) {
+	//	for (int j = 0; j < mmax; j++) {
+	//		M[i][j] = 0;
+	//		P[i][j] = 0;
+	//	}
+	//}	
 }
 
 void Instance::Lecture(std::string nom_fichier)
@@ -23,15 +28,15 @@ void Instance::Lecture(std::string nom_fichier)
 		file >> m; // lecture NB machine
 		
 		// Parcours des pièces à insérer
-		for (int i = 1; i <= n; i++)
+		for (int i = 0; i < n; i++)
 		{
 			// Parcours des machines parcourus 
-			for (int j = 1; j <= m; j++)
+			for (int j = 0; j < m; j++)
 			{
 				string lectureM, lectureP;
 				file >> lectureM;
 				file >> lectureP;
-				M[i][j] = atoi(lectureM.c_str()) + 1;
+				M[i][j] = atoi(lectureM.c_str()); //pas de +1 ici bordel de cul
 				P[i][j] = atoi(lectureP.c_str());
 			}
 		}
@@ -44,8 +49,8 @@ void Instance::Afficher()
 	cout << name << endl;
 	cout << "n = " << n << endl;
 	cout << "m = " << m << endl;
-	for (int i = 1; i <= n; i++) {
-		for (int j = 1; j <= m; j++) {
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
 			cout << M[i][j] << " " << P[i][j] << " ";
 		}
 		cout << endl;
