@@ -82,8 +82,8 @@ void Test_La00()
 	BierwithVector vector;
 	vector.Generer_Aleatoirement(la00);
 	vector.AfficherVecteur();
-	//vector.Evaluer(la00);
-	//vector.AfficherCout();
+	vector.Evaluer(la00);
+	vector.AfficherCout();
 	//vector.Recherche_Locale(la00, 2000);
 	//vector.AfficherVecteur();
 	//vector.AfficherCout();
