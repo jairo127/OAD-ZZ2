@@ -46,6 +46,7 @@ void BierwithVector::Generer_Aleatoirement(Instance& inst)
 
 		int i = distrib(generator); // gen aleatoire
 
+		//attention warning visual ici. je pense qu'il est attardé mais warning qd même
 		mach_r[val[i]]--; // decr nb occurence machine i
 		V[cour] = val[i];
 
@@ -74,6 +75,22 @@ void BierwithVector::Evaluer(Instance& inst)
 	cout = 0;
 	int np[nmax]; //compteur d'appartion du job
 	Tuple mp[nmax * mmax]; //initialisé à -1 -1 : opération précédente (j = identifient job ; i = numéro opération pour job j)
+
+	Tuple aa(44, 44);
+	Tuple nn(55, 66);
+	Tuple oo(44, 44);
+
+	if (aa != oo)
+	{
+		std::cout << "TEST + FAIL" << std::endl;
+	}
+	else std::cout << "TEST + REUSSI" << std::endl;
+
+	if (aa != nn)
+	{
+		std::cout << "TEST - REUSSI" << std::endl;
+	}
+	else std::cout << "TEST - FAIL" << std::endl;
 
 	for (int i = 0; i < nmax; i++) // De 1 à N inclus!
 	{
