@@ -19,15 +19,15 @@ BierwithVector::BierwithVector() : nb(0), cout(0)
 void BierwithVector::Generer_Aleatoirement(Instance& inst)
 {
 	nb = inst.n * inst.m;	// taille vecteur
-	int mach_r[mmax];		// nb occurence machine restante
-	int val[mmax];			// valeurs insérables (1, lim)
+	int mach_r[nmax];		// nb occurence machine restante
+	int val[nmax];			// valeurs insérables (1, lim)
 
-	int lim = inst.m-1;		// m machines actives au début
+	int lim = inst.n-1;		// m machines actives au début
 
 	int cour = 0;			//index d'insertion dans le vecteur.
 
-	for (int i = 0 ; i < inst.m; i++) {
-		mach_r[i] = inst.n;
+	for (int i = 0 ; i < inst.n; i++) {
+		mach_r[i] = inst.m;
 		val[i] = i;
 	}
 
@@ -51,7 +51,7 @@ void BierwithVector::Generer_Aleatoirement(Instance& inst)
 		mach_r[val[i]]--; // decr nb occurence machine i
 		V[cour] = val[i];
 
-		if (mach_r[val[i]] == 0) // si nb occurence mach i = 0 => suppr machine i
+		if (mach_r[val[i]] == 0) // si nb occurence mach i == 0 => suppr machine i
 		{
 			// décaler à gauche(i+1, lim)
 			for (int j = i; j < lim; j++)
@@ -64,10 +64,8 @@ void BierwithVector::Generer_Aleatoirement(Instance& inst)
 			if (lim >= 0)
 				distrib = uniform_int_distribution<int>(0, lim);
 		}
-
 		cour++;
 	}
-
 }
 
 void BierwithVector::Evaluer(Instance& inst)
