@@ -76,22 +76,6 @@ void BierwithVector::Evaluer(Instance& inst)
 	int np[nmax]; //compteur d'appartion du job
 	Tuple mp[nmax * mmax]; //initialisé à -1 -1 : opération précédente (j = identifient job ; i = numéro opération pour job j)
 
-	Tuple aa(44, 44);
-	Tuple nn(55, 66);
-	Tuple oo(44, 44);
-
-	if (aa != oo)
-	{
-		std::cout << "TEST + FAIL" << std::endl;
-	}
-	else std::cout << "TEST + REUSSI" << std::endl;
-
-	if (aa != nn)
-	{
-		std::cout << "TEST - REUSSI" << std::endl;
-	}
-	else std::cout << "TEST - FAIL" << std::endl;
-
 	for (int i = 0; i < nmax; i++) // De 1 à N inclus!
 	{
 		np[i] = 0; //compteur d'appartion du job à 0
