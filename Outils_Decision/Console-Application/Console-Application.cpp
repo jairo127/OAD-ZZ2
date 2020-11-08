@@ -11,7 +11,7 @@ int main()
 	//Test_Eval_Multiple();
 	/*Test_Recherche_Locale();*/
 	//Test_La00();
-	TestGrasp(10);
+	TestGrasp(300);
 
 	/* HVRP */
 	//H_test_lecture();

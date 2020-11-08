@@ -115,7 +115,7 @@ void Instance::Grasp(int iterMax)
 			fils.V[x] = vector.V[y];
 
 			//recherche locale du fils, hash, évaluer
-			fils.Recherche_Locale(*this, 20);
+			fils.Recherche_Locale(*this, 50);
 
 			// Si hash pas présent, ajout aux hash et aux 10 fils sinon i--
 			if(hashtable[fils.CalcHash(*this)] != 1 && retry < MaxRetry)
@@ -147,8 +147,8 @@ void Instance::Grasp(int iterMax)
 	}
 
 	// Affichage du résultat
-	std::cout << "Résulat final :" << std::endl;
 	vector.AfficherVecteur();
+	std::cout << "Résulat final :" << std::endl;
 	vector.AfficherCout();
 
 	// aller merci au revoir
