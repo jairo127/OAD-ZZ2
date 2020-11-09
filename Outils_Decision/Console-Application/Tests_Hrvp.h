@@ -4,6 +4,4 @@
 
 void H_test_lecture();
 
-
-
 #endif
