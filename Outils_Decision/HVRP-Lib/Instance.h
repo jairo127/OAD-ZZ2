@@ -18,7 +18,8 @@ public:
 	int nb_type_camion;
 
 	/// <summary>
-	/// Distance de i vers j (de 0 à 91)
+	/// Distance de i vers j (de 0 à 91) 
+	/// -> 0 sera le dépot
 	/// </summary>
 	float D[MAX_NOEUD + 1][MAX_NOEUD + 1]; 
 
@@ -52,5 +53,11 @@ public:
 	/// </summary>
 	/// <param name="file_name">Chemin du fichier</param>
 	void lecture(std::string file_name);
+
+	/// <summary>
+	/// Affichage du contenu de l'objet d'instance
+	/// </summary>
+	void afficher();
+
 };
 
