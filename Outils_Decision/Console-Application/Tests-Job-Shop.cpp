@@ -96,4 +96,5 @@ void TestGrasp(int valeur)
 	la01.Afficher();
 	la01.Grasp(valeur);
 
+	std::cout << "Fin Test lecture" << std::endl;
 }

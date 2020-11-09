@@ -145,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tests-Job-Shop.h" />
+    <ClInclude Include="Tests_Hrvp.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DataSet\La01" />
@@ -152,6 +153,9 @@
     <None Include="DataSet\La03" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HVRP-Lib\HVRP-Lib.vcxproj">
+      <Project>{245cabf5-bac1-4241-8f00-0ed8d9901dab}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Job-Shop-Lib\Job-Shop-Lib.vcxproj">
       <Project>{c771f861-5274-4d96-b11c-5be2ea9119ce}</Project>
     </ProjectReference>

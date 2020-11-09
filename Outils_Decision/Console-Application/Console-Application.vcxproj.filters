@@ -32,6 +32,9 @@
     <ClInclude Include="Tests-Job-Shop.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Tests_Hrvp.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="DataSet\La01">
