@@ -22,7 +22,7 @@ public:
 	void Afficher();
 
 	// GRASP
-	void Grasp(int iterMax);
+	int Grasp(int iterMax, int iterLoc);
 
 };
 

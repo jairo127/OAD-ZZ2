@@ -71,7 +71,7 @@ void Instance::Afficher()
 
 //on garde la meilleure des solutions générées (même si elle est moins bonne que le père
 
-void Instance::Grasp(int iterMax)
+int Instance::Grasp(int iterMax,int iterLoc)
 {
 	// Création et initialisation de la table de hachage
 	int MaxRetry = 100;
@@ -85,7 +85,7 @@ void Instance::Grasp(int iterMax)
 	vector.Evaluer(*this);
 	vector.Recherche_Locale(*this, 100);
 	std::cout << "Cout avant la recherche Globale : ";
-	vector.AfficherCout();
+	//vector.AfficherCout();
 	hashtable[vector.CalcHash(*this)] = 1;
 
 	//génération des vecteurs fils :
@@ -115,7 +115,7 @@ void Instance::Grasp(int iterMax)
 			fils.V[x] = vector.V[y];
 
 			//recherche locale du fils, hash, évaluer
-			fils.Recherche_Locale(*this, 50);
+			fils.Recherche_Locale(*this, iterLoc);
 
 			// Si hash pas présent, ajout aux hash et aux 10 fils sinon i--
 			if(hashtable[fils.CalcHash(*this)] != 1 && retry < MaxRetry)
@@ -139,10 +139,8 @@ void Instance::Grasp(int iterMax)
 		for (int j = 1; j < 10; j++)
 			if (t_fils[j].cout < t_fils[jmax].cout)
 				jmax = j;
-
-		// Réitération sur le meilleur fils
+		// Itération sur le meilleur fils
 		vector = t_fils[jmax];
-
 		iter++;
 	}
 
@@ -150,6 +148,6 @@ void Instance::Grasp(int iterMax)
 	vector.AfficherVecteur();
 	std::cout << "Résulat final :" << std::endl;
 	vector.AfficherCout();
+	return vector.cout;
 
-	// aller merci au revoir
 }

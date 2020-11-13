@@ -11,8 +11,12 @@ int main()
 	//Test_Eval_Multiple();
 	/*Test_Recherche_Locale();*/
 	//Test_La00();
-	TestGrasp(300);
-
+	int sum=0;
+	for (int i=0; i<10; i++)
+	{ 
+		sum+=TestGrasp(50, 20);
+	}
+	std::cout << "moyenne : " << sum / 10;
 	/* HVRP */
 	//H_test_lecture();
 	return 0;

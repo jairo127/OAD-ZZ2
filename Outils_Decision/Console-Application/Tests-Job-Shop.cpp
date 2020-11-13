@@ -2,7 +2,7 @@
 #include "../Job-Shop-Lib/Instance.h"
 #include "../Job-Shop-Lib/BierwithVector.h"
 
-void Test_Lecture_LaXXX() // sa marche
+void Test_Lecture_LaXXX() // ok
 {
 	Instance la01, la02, la03;
 	la01.Lecture("DataSet/La01");
@@ -13,7 +13,7 @@ void Test_Lecture_LaXXX() // sa marche
 	la03.Afficher();
 }
 
-void Test_Gen_Vecteurs() // sa marche
+void Test_Gen_Vecteurs() // ok
 {
 	Instance la01;
 	BierwithVector vectors[10];
@@ -89,11 +89,12 @@ void Test_La00()
 	//vector.AfficherCout();
 }
 
-void TestGrasp(int valeur)
+int TestGrasp(int valeur,int loc)
 {
 	Instance la01;
 	la01.Lecture("DataSet/La01");
-	la01.Afficher();
-	la01.Grasp(valeur);
+	//la01.Afficher();
+	return la01.Grasp(valeur, loc);
+
 
 }
