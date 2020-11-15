@@ -3,5 +3,6 @@
 #include <iostream>
 
 void H_test_lecture();
+void H_test_label();
 
 #endif

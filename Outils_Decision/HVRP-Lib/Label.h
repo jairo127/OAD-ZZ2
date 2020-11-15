@@ -31,7 +31,7 @@ public:
 	/// Compare ce label à un label l
 	/// </summary>
 	/// <param name="l">Label auquel on compare</param>
-	/// <returns>(this < l)=1, (this > l)=2, (this ? l)=0</returns>
+	/// <returns>(this < l)=1, (this > l)=2, (this ? l)=3</returns>
 	int compare(Label l); 
 };
 

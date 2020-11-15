@@ -1,5 +1,6 @@
 ﻿#include "Tests_Hrvp.h"
 #include "../HVRP-Lib/Instance.h"
+#include "../HVRP-Lib/Label.h"
 
 void H_test_lecture()
 {
@@ -11,4 +12,49 @@ void H_test_lecture()
 
 
 
+}
+
+void H_test_label()
+{
+    Label l1, l2, l3, l4;
+    
+    // L1 = (2,1,1,1,20)
+    l1.nb_camion_restant.push_back(0); // valeur inutile
+    l1.nb_camion_restant.push_back(2);
+    l1.nb_camion_restant.push_back(1);
+    l1.nb_camion_restant.push_back(1);
+    l1.nb_camion_restant.push_back(1);
+    l1.cout_total = 20;
+    
+    // L2 = (2,2,1,1,20)
+    l2.nb_camion_restant.push_back(0); // valeur inutile
+    l2.nb_camion_restant.push_back(2);
+    l2.nb_camion_restant.push_back(2);
+    l2.nb_camion_restant.push_back(1);
+    l2.nb_camion_restant.push_back(1);
+    l2.cout_total = 20;
+
+    // L3 = (1,2,1,1,20)
+    l3.nb_camion_restant.push_back(0); // valeur inutile
+    l3.nb_camion_restant.push_back(1);
+    l3.nb_camion_restant.push_back(2);
+    l3.nb_camion_restant.push_back(1);
+    l3.nb_camion_restant.push_back(1);
+    l3.cout_total = 20;
+
+    // L4 = (2,1,1,1,15)
+    l4.nb_camion_restant.push_back(0); // valeur inutile
+    l4.nb_camion_restant.push_back(2);
+    l4.nb_camion_restant.push_back(1);
+    l4.nb_camion_restant.push_back(1);
+    l4.nb_camion_restant.push_back(1);
+    l4.cout_total = 15;
+
+    std::cout << "Compare l1 et l2 = " << l1.compare(l2) << std::endl; // Supposé = 1
+    std::cout << "Compare l1 et l3 = " << l1.compare(l3) << std::endl; // Supposé = 0
+    std::cout << "Compare l1 et l4 = " << l1.compare(l4) << std::endl; // Supposé = 2
+    std::cout << "Compare l2 et l3 = " << l2.compare(l3) << std::endl; // Supposé = 2
+    std::cout << "Compare l2 et l4 = " << l2.compare(l4) << std::endl; // Supposé = 2
+    // l3.camions ? l4.camions => 3
+    std::cout << "Compare l3 et l4 = " << l3.compare(l4) << std::endl; // Supposé = 0
 }

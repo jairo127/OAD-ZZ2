@@ -14,6 +14,7 @@ int main()
 	//TestGrasp(300);
 
 	// === HVRP ===
-	H_test_lecture();
+	//H_test_lecture();
+	H_test_label();
 	return 0;
 }
