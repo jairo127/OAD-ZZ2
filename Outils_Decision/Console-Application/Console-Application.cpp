@@ -15,6 +15,8 @@ int main()
 
 	// === HVRP ===
 	//H_test_lecture();
-	H_test_label();
+	//H_test_label();
+	test_tg_random();
+
 	return 0;
 }

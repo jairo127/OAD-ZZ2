@@ -1,8 +1,10 @@
 #pragma once
-
+#include <random>
+#include <chrono>
+#include <iostream>
+#include <vector>
 #include "Constantes.h"
 #include "Tournee.h"
-#include <vector>
 
 class Solution
 {
@@ -31,6 +33,26 @@ public:
 	/// Constructeur par défaut de la solution
 	/// </summary>
 	Solution();
+
+	/// <summary>
+	/// Fonction pour generer un tour geant
+	/// </summary>
+	void gen_tg_voisin(Instance& inst);
+
+	/// <summary>
+	/// Fonction pour generer un tour geant
+	/// </summary>
+	void afficher_tg() const;
+
+	/// <summary>
+	/// Fonction pour generer un tour geant
+	/// </summary>
+	void gen_tg_voisin_random(Instance& inst);
+
+	/// <summary>
+	/// Fonction pour generer un tour geant
+	/// </summary>
+	void gen_tg_random(Instance& inst);
 
 	/// <summary>
 	/// Vérifie si la solution est cohérente

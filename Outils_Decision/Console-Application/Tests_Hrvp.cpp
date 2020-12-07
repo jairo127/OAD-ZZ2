@@ -1,6 +1,8 @@
 ﻿#include "Tests_Hrvp.h"
 #include "../HVRP-Lib/Instance.h"
 #include "../HVRP-Lib/Label.h"
+#include "../HVRP-Lib/Solution.h"
+
 
 void H_test_lecture()
 {
@@ -9,8 +11,6 @@ void H_test_lecture()
     moninstance.lecture("HFVRP/HVRP_DLP_01");
     moninstance.afficher();
     std::cout << "Fin test lecture" << std::endl;
-
-
 
 }
 
@@ -57,4 +57,48 @@ void H_test_label()
     std::cout << "Compare l2 et l4 = " << l2.compare(l4) << std::endl; // Supposé = 2
     // l3.camions ? l4.camions => 3
     std::cout << "Compare l3 et l4 = " << l3.compare(l4) << std::endl; // Supposé = 0
+}
+
+void test_tg_random()
+{
+    Instance* ptr_instance = new Instance;
+    Instance& moninstance = *ptr_instance;
+    moninstance.lecture("HFVRP/HVRP_DLP_01");
+
+    Solution* ptr_sol = new Solution;
+    Solution& sol = *ptr_sol;
+
+    sol.gen_tg_random(moninstance);
+    sol.afficher_tg();
+    std::cout << "Fin test tg_random" << std::endl;
+
+}
+
+void test_tg_voisin()
+{
+    Instance* ptr_instance = new Instance;
+    Instance& moninstance = *ptr_instance;
+    moninstance.lecture("HFVRP/HVRP_DLP_01");
+
+    Solution* ptr_sol = new Solution;
+    Solution& sol = *ptr_sol;
+
+    sol.gen_tg_voisin(moninstance);
+    sol.afficher_tg();
+    std::cout << "Fin test tg_voisins" << std::endl;
+
+}
+
+void test_tg_voisin_random()
+{
+    Instance* ptr_instance = new Instance;
+    Instance& moninstance = *ptr_instance;
+    moninstance.lecture("HFVRP/HVRP_DLP_01");
+
+    Solution* ptr_sol = new Solution;
+    Solution& sol = *ptr_sol;
+    
+    sol.gen_tg_voisin_random(moninstance);
+    sol.afficher_tg();
+    std::cout << "Fin test tg_voisin_random"<< std::endl;
 }

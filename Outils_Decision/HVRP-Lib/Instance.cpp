@@ -35,6 +35,6 @@ void Instance::lecture(std::string file_name)
 
 void Instance::afficher()
 {
-	std::cout << "Nb noeuds : " << nb_noeud << " + dépot " << std::endl;
-	std::cout << "Types de camions différents : " << nb_type_camion << std::endl;
+	std::cout << "Nb noeuds : " << nb_noeud << " + depot " << std::endl;
+	std::cout << "Types de camions differents : " << nb_type_camion << std::endl;
 }
