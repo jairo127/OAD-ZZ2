@@ -11,6 +11,7 @@ void H_test_label();
 void test_tg_random();
 void test_tg_voisin();
 void test_tg_voisin_random();
-bool test_TG_SIZE(Instance& inst, Solution& sol);
+bool test_TG_SIZE(const Instance& inst, const Solution& sol);
+bool test_TG_UNIQUE(const Instance& inst, const Solution& sol);
 
 #endif

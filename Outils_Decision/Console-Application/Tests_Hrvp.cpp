@@ -75,6 +75,7 @@ void test_tg_random()
     sol.afficher_tg();
    
     test_TG_SIZE(inst, sol);
+    test_TG_UNIQUE(inst, sol);
 
     std::cout << "FINISHED : " << __func__ << std::endl << std::endl;
 
@@ -94,6 +95,7 @@ void test_tg_voisin()
     sol.afficher_tg();
 
     test_TG_SIZE(inst, sol);
+    test_TG_UNIQUE(inst, sol);
 
     std::cout << "FINISHED : " << __func__ << std::endl << std::endl;
 
@@ -113,6 +115,7 @@ void test_tg_voisin_random()
     sol.afficher_tg();
 
     test_TG_SIZE(inst, sol);
+    test_TG_UNIQUE(inst, sol);
 
     std::cout << "FINISHED : " << __func__ << std::endl << std::endl;
 }
@@ -122,12 +125,12 @@ void test_tg_voisin_random()
 //////////////////////////////////////////////////////////////////
 
 //vérification de la taille du TG
-bool test_TG_SIZE(Instance& inst, Solution& sol)
+bool test_TG_SIZE(const Instance& inst, const Solution& sol)
 {
     if (sol.tour_geant.size() != inst.nb_noeud + 1) //vérif taille du tg
     {
         std::cout << __func__ << ": ERR : sol.tour_geant.size() != inst.nb_noeud+1" << std::endl;
-        std::cout << sol.tour_geant.size() << " != " << inst.nb_noeud + 1 << std::endl << "TEST TG_SIZE FAILED" << std::endl;
+        std::cout << sol.tour_geant.size() << " != " << inst.nb_noeud + 1 << std::endl << __func__ << " FAILED" << std::endl;
         return false;
     }
     else
@@ -136,3 +139,22 @@ bool test_TG_SIZE(Instance& inst, Solution& sol)
         return true;
     }
 }
+
+bool test_TG_UNIQUE(const Instance& inst, const Solution& sol)
+{
+    auto cptg = sol.tour_geant;
+    std::sort(cptg.begin(), cptg.end());
+
+    for (int i = 1; i < cptg.size(); i++)
+    {
+        if (cptg[i - 1] == cptg[i])
+        {
+            std::cout << __func__ << ": ERR : Duplicat : " << cptg[i] << std::endl;
+            std::cout << sol.tour_geant.size() << " != " << inst.nb_noeud + 1 << std::endl << __func__ << " FAILED" << std::endl;
+            return false;
+        }
+    }
+    std::cout << __func__ << " PASSED" << std::endl;
+    return true;
+}
+
