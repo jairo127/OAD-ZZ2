@@ -12,7 +12,7 @@ void Solution::gen_tg_random(Instance& inst)
 {
     // vecteur des noeuds (pour pouvoir les supprimer)
     std::vector<int> sommets;
-    for (int i = 1; i < inst.nb_noeud; i++)
+    for (int i = 1; i <= inst.nb_noeud; i++)
         sommets.push_back(i);
 
 
@@ -22,13 +22,13 @@ void Solution::gen_tg_random(Instance& inst)
     // fixed seed
     //generator.seed(0);
 
-    int index_max_val = inst.nb_noeud - 2;
+    int index_max_val = inst.nb_noeud - 1;
 
     // init dépôt
     tour_geant.push_back(0);
 
     //cassé, ne génère pas le dernier noeud
-    for (int i = 1; i < inst.nb_noeud; i++)
+    for (int i = 1; i <= inst.nb_noeud; i++)
     {
         std::uniform_int_distribution<int> distrib(0, index_max_val);
         // obtenir la position tirée  
@@ -54,11 +54,10 @@ void Solution::gen_tg_voisin(Instance& inst)
         s_parcourus[i] = false;
 
     tour_geant.push_back(0); //Ajouter le dépot au tour géant
-    //parcourir la liste des sommmets pour établir les plus proches
-    /*for (int i = 0; i < inst.nb_noeud + 1; i++)*/
 
+    //parcourir la liste des sommmets pour établir les plus proches
     int iter = 0; //il faut faire le calcul du voisin 1x par sommet
-    while (iter < inst.nb_noeud) //VERIF
+    while (iter < inst.nb_noeud) 
     {
         int cur = 0;                //Sommet en cours de ttt
         int best_id = -1;          //numero du sommet le plus proche de cur, init à -1
@@ -84,15 +83,93 @@ void Solution::gen_tg_voisin(Instance& inst)
 //resultats aléatoires avec peu de variation
 void Solution::gen_tg_voisin_random(Instance& inst)
 {
-    //std::default_random_engine generator;
-    //// random seed
-    //generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
-    //// fixed seed
-    ////generator.seed(0);
-    //std::uniform_int_distribution<int> distrib(0, 5);
+    //une seule alloc dyn évite des montagnes de debug
+    //liste de bools pour savoir si le sommmet a été traité
+    bool* s_parcourus = new bool[inst.nb_noeud + 1];
+    for (int i = 0; i < inst.nb_noeud + 1; i++)
+    {
+        s_parcourus[i] = false;
+    }
+
+    tour_geant.push_back(0); //Ajouter le dépot au tour géant
+
+    std::vector<int> id_candidats;       //identifiants des 5 candidats les plus proches
+    std::vector<float> dist_candidats;  //distance des 5 candidats les plus proches
+
+
+    //parcourir la liste des sommmets pour établir les plus proches
+    int iter = 0; //il faut faire le calcul du voisin 1x par sommet
+    int cur = 0; //Sommet en cours de ttt
+    while (iter < inst.nb_noeud)
+    {
+        int cur = 0; //Sommet en cours de ttt
+
+        for (int j = 1; j < inst.nb_noeud + 1; j++) //pas besoin de tester 0 à chaque fois
+        {
+            if (!s_parcourus[j]) //on ne regarde que les sommmets non-parcourus
+            {
+                if (dist_candidats.empty()) //cas où le vecteur est vide
+                {
+                    id_candidats.push_back(j);
+                    dist_candidats.push_back(inst.D[cur][j]);
+                }
+                else //vecteurs pas vides
+                {
+                    //parcourir le vecteur de candidats en partant du back() avec la valeur la plus grande
+                    for (auto k = dist_candidats.size() - 1; k >= 0; k--)
+                    {
+                        if (dist_candidats[k] > inst.D[cur][j])
+                        {
+
+
+                        }
+                        else if (dist_candidats.size() < 5) //il manque des candidats
+                        {
+                            id_candidats.push_back(j);
+                            dist_candidats.push_back(inst.D[cur][j]);
+                        }
+                        else
 
 
 
+                            if (k = !dist_candidats.size() - 1)
+                            {
+                                id_candidats.insert(id_candidats.begin() + k + 1, j);
+                                dist_candidats.insert(dist_candidats.begin() + k + 1, inst.D[cur][j]);
+
+                                if (dist_candidats.size() > 5)
+                                {
+                                    id_candidats.pop_back();
+                                    dist_candidats.pop_back();
+                                }
+                            }
+                        break;
+                    }
+                    //else
+                    {
+
+                    }
+
+                }
+
+            }
+            //s_parcourus[best_id] = true;    //Marquer le sommet le plus proche comme ttt
+            //tour_geant.push_back(best_id); //Ajouter le sommet le plus proche au tg
+            //cur = best_id;
+            iter++;                      //increm itercount
+        }
+
+
+        //std::default_random_engine generator;
+        //// random seed
+        //generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
+        //// fixed seed
+        ////generator.seed(0);
+        //std::uniform_int_distribution<int> distrib(0, 5);
+
+
+
+    }
 }
 
 bool Solution::check_solution(Instance inst)

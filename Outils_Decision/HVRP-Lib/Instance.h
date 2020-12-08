@@ -8,7 +8,7 @@ class Instance
 {
 public:
 	/// <summary>
-	/// Nombre de noeuds total 
+	/// Nombre de noeuds sans compter le dépot
 	/// (92 noeuds -> dépôt compris, 91 clients -> dépôt exclus)
 	/// le dernier noeud est numéroté 91!
 	/// </summary>
