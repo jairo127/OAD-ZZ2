@@ -102,7 +102,8 @@ void Solution::gen_tg_voisin_random(Instance& inst)
     int cur = 0; //Sommet en cours de ttt
     while (iter < inst.nb_noeud)
     {
-        int cur = 0; //Sommet en cours de ttt
+        id_candidats.clear();
+        dist_candidats.clear();
 
         for (int j = 1; j < inst.nb_noeud + 1; j++) //pas besoin de tester 0 à chaque fois
         {
@@ -116,59 +117,49 @@ void Solution::gen_tg_voisin_random(Instance& inst)
                 else //vecteurs pas vides
                 {
                     //parcourir le vecteur de candidats en partant du back() avec la valeur la plus grande
-                    for (auto k = dist_candidats.size() - 1; k >= 0; k--)
+                    for (int k = (int(dist_candidats.size())-1); k >= 0; k--) //la conv en int est obligatoire
                     {
-                        if (dist_candidats[k] > inst.D[cur][j])
+                        if (dist_candidats[k] > inst.D[cur][j]) //tester si plus petit. si oui itérer.
                         {
-
-
+                            continue; //decrem K. la val sera insérée
                         }
-                        else if (dist_candidats.size() < 5) //il manque des candidats
+                        else if (dist_candidats.size() < 5) //il manque des candidats; ajouter
                         {
                             id_candidats.push_back(j);
                             dist_candidats.push_back(inst.D[cur][j]);
                         }
-                        else
-
-
-
-                            if (k = !dist_candidats.size() - 1)
+                        else //il faut break car dist_candidats[k] < inst.D[cur][j] && dist_candidats.size() = 5
+                        { //il faut tester si on écrit. 
+                            if (k<4) //insérer en position k+1 et break
                             {
                                 id_candidats.insert(id_candidats.begin() + k + 1, j);
                                 dist_candidats.insert(dist_candidats.begin() + k + 1, inst.D[cur][j]);
-
-                                if (dist_candidats.size() > 5)
-                                {
-                                    id_candidats.pop_back();
-                                    dist_candidats.pop_back();
-                                }
+                                id_candidats.pop_back();
+                                dist_candidats.pop_back();
+                                break;
                             }
-                        break;
+                            else //break sans insert
+                            {
+                                break;
+                            }  
+                        }
                     }
-                    //else
-                    {
-
-                    }
-
                 }
-
             }
-            //s_parcourus[best_id] = true;    //Marquer le sommet le plus proche comme ttt
-            //tour_geant.push_back(best_id); //Ajouter le sommet le plus proche au tg
-            //cur = best_id;
-            iter++;                      //increm itercount
         }
+        //fin boucle qui itère sur les ddestinations possibles. 
+        //Les 5 candidats les plus proches sont dans les vecteurs :
 
+        std::default_random_engine generator;
+        generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
+        std::uniform_int_distribution<int> distrib(0, int(id_candidats.size())-1 );
+        int x = distrib(generator);
 
-        //std::default_random_engine generator;
-        //// random seed
-        //generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
-        //// fixed seed
-        ////generator.seed(0);
-        //std::uniform_int_distribution<int> distrib(0, 5);
+        s_parcourus[id_candidats[x]] = true;    //Marquer le sommet le plus proche comme ttt
+        tour_geant.push_back(id_candidats[x]); //Ajouter le sommet le plus proche au tg
+        cur = id_candidats[x];
 
-
-
+        iter++; //increm itercount, fin ttt d'un sommet
     }
 }
 

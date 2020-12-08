@@ -16,9 +16,9 @@ int main()
 	// === HVRP ===
 	//H_test_lecture();
 	//H_test_label();
-	test_tg_random();
-	test_tg_voisin();
-	//test_tg_voisin_random();
+	//test_tg_random();
+	//test_tg_voisin();
+	test_tg_voisin_random();
 
 	return 0;
 }
