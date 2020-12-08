@@ -8,7 +8,9 @@ class Instance
 {
 public:
 	/// <summary>
-	/// Nombre de noeuds total (92 noeuds -> dépôt compris, 91 clients -> dépôt exclus)
+	/// Nombre de noeuds total 
+	/// (92 noeuds -> dépôt compris, 91 clients -> dépôt exclus)
+	/// le dernier noeud est numéroté 91!
 	/// </summary>
 	int nb_noeud; 
 
@@ -20,11 +22,13 @@ public:
 	/// <summary>
 	/// Distance de i vers j (de 0 à 91) 
 	/// -> 0 sera le dépot
+	/// Dernier élément inséré à D[nb_noeud][nb_noeud]
 	/// </summary>
 	float D[MAX_NOEUD + 1][MAX_NOEUD + 1]; 
 
 	/// <summary>
 	/// Quantité demandé par le noeud i (de 1 à 91)
+	/// Dernier élément inséré à Q[nb_noeud][nb_noeud]
 	/// </summary>
 	int Q[MAX_NOEUD + 1];
 

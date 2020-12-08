@@ -10,6 +10,7 @@ void Instance::lecture(std::string file_name)
 	{
 		file >> nb_noeud; // lecture nombre de noeuds
 		file >> nb_type_camion; // lecture nombre de types de camion
+
 		for (int i = 1; i <= nb_type_camion; i++) // lecture types de camions
 		{
 			file >> nb_camion[i];

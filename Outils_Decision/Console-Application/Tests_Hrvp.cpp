@@ -1,7 +1,7 @@
 ﻿#include "Tests_Hrvp.h"
-#include "../HVRP-Lib/Instance.h"
-#include "../HVRP-Lib/Label.h"
-#include "../HVRP-Lib/Solution.h"
+//#include "../HVRP-Lib/Instance.h"
+//#include "../HVRP-Lib/Label.h"
+//#include "../HVRP-Lib/Solution.h"
 
 
 void H_test_lecture()
@@ -59,46 +59,80 @@ void H_test_label()
     std::cout << "Compare l3 et l4 = " << l3.compare(l4) << std::endl; // Supposé = 0
 }
 
+
+
 void test_tg_random()
 {
+    std::cout << "EXECUTING : " << __func__ << std::endl;
     Instance* ptr_instance = new Instance;
-    Instance& moninstance = *ptr_instance;
-    moninstance.lecture("HFVRP/HVRP_DLP_01");
+    Instance& inst = *ptr_instance;
+    inst.lecture("HFVRP/HVRP_DLP_01");
 
     Solution* ptr_sol = new Solution;
     Solution& sol = *ptr_sol;
 
-    sol.gen_tg_random(moninstance);
+    sol.gen_tg_random(inst);
     sol.afficher_tg();
-    std::cout << "Fin test tg_random" << std::endl;
+   
+    test_TG_SIZE(inst, sol);
+
+    std::cout << "FINISHED : " << __func__ << std::endl << std::endl;
 
 }
 
 void test_tg_voisin()
 {
+    std::cout << "EXECUTING : " << __func__ << std::endl;
     Instance* ptr_instance = new Instance;
-    Instance& moninstance = *ptr_instance;
-    moninstance.lecture("HFVRP/HVRP_DLP_01");
+    Instance& inst = *ptr_instance;
+    inst.lecture("HFVRP/HVRP_DLP_01");
 
     Solution* ptr_sol = new Solution;
     Solution& sol = *ptr_sol;
 
-    sol.gen_tg_voisin(moninstance);
+    sol.gen_tg_voisin(inst);
     sol.afficher_tg();
-    std::cout << "Fin test tg_voisins" << std::endl;
+
+    test_TG_SIZE(inst, sol);
+
+    std::cout << "FINISHED : " << __func__ << std::endl << std::endl;
 
 }
 
 void test_tg_voisin_random()
 {
+    std::cout << "EXECUTING : " << __func__ << std::endl;
     Instance* ptr_instance = new Instance;
-    Instance& moninstance = *ptr_instance;
-    moninstance.lecture("HFVRP/HVRP_DLP_01");
+    Instance& inst = *ptr_instance;
+    inst.lecture("HFVRP/HVRP_DLP_01");
 
     Solution* ptr_sol = new Solution;
     Solution& sol = *ptr_sol;
     
-    sol.gen_tg_voisin_random(moninstance);
+    sol.gen_tg_voisin_random(inst);
     sol.afficher_tg();
-    std::cout << "Fin test tg_voisin_random"<< std::endl;
+
+    test_TG_SIZE(inst, sol);
+
+    std::cout << "FINISHED : " << __func__ << std::endl << std::endl;
+}
+
+///////////////////////////////////////////////////////////////////
+//tests pseudo-unitaires :)
+//////////////////////////////////////////////////////////////////
+
+//vérification de la taille du TG
+bool test_TG_SIZE(Instance& inst, Solution& sol)
+{
+    if (sol.tour_geant.size() != inst.nb_noeud + 1) //vérif taille du tg
+    {
+        std::cout << __func__ << ": ERR : sol.tour_geant.size() != inst.nb_noeud+1" << std::endl;
+        std::cout << sol.tour_geant.size() << " != " << inst.nb_noeud + 1 << std::endl << "TEST TG_SIZE FAILED" << std::endl;
+        return false;
+    }
+    else
+    {
+        std::cout << __func__ << " PASSED" << std::endl;
+        return true;
+    }
 }

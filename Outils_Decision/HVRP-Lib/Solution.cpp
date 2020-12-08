@@ -7,6 +7,7 @@ Solution::Solution() : nb_tournee(0), cout(0)
 
 // Fonction pour générer un tour géant de manière aléatoire
 // Résultat aléatoire
+//A CORRIGER NE GEN PAS LE DERNIER SOMMET
 void Solution::gen_tg_random(Instance& inst)
 {
     // vecteur des noeuds (pour pouvoir les supprimer)
@@ -26,13 +27,13 @@ void Solution::gen_tg_random(Instance& inst)
     // init dépôt
     tour_geant.push_back(0);
 
-    //sommets.erase(sommets.begin());
-
+    //cassé, ne génère pas le dernier noeud
     for (int i = 1; i < inst.nb_noeud; i++)
     {
         std::uniform_int_distribution<int> distrib(0, index_max_val);
         // obtenir la position tirée  
         int x = distrib(generator);
+
         int sommet = sommets[x];
         sommets.erase(sommets.begin() + x);
         index_max_val--;
@@ -41,24 +42,46 @@ void Solution::gen_tg_random(Instance& inst)
     }
 }
 
+
 // Fonction pour générer un tour géant
 //resultat doit être tj le même
 void Solution::gen_tg_voisin(Instance& inst)
 {
-    std::vector<bool> sommets;
-    for(int i = 0; i < inst.nb_noeud; i++)
-        sommets.push_back(false);
+    //une seule alloc dyn évite des montagnes de debug
+    //liste de bools pour savoir si le sommmet a été traité
+    bool* s_parcourus = new bool[inst.nb_noeud+1];
+    for (int i = 0; i < inst.nb_noeud+1; i++)
+        s_parcourus[i] = false;
 
-    sommets[0] = true;
+    tour_geant.push_back(0); //Ajouter le dépot au tour géant
+    //parcourir la liste des sommmets pour établir les plus proches
+    /*for (int i = 0; i < inst.nb_noeud + 1; i++)*/
 
-    //for(int i = 0; int i)
+    int iter = 0; //il faut faire le calcul du voisin 1x par sommet
+    while (iter < inst.nb_noeud) //VERIF
+    {
+        int cur = 0;                //Sommet en cours de ttt
+        int best_id = -1;          //numero du sommet le plus proche de cur, init à -1
+        float best_dist = INF;    //distance du sommet le plus proche de cur, init à INF
 
-
-
+        for (int j = 1; j < inst.nb_noeud+1; j++) //pas besoin de tester 0 à chaque fois
+        {
+            if (!s_parcourus[j] && inst.D[cur][j]< best_dist) //si sommmet non ttt et distance plus basse
+            {
+                  best_id = j;
+                  best_dist = inst.D[cur][j];
+            }
+        }
+        s_parcourus[best_id] = true;    //Marquer le sommet le plus proche comme ttt
+        tour_geant.push_back(best_id); //Ajouter le sommet le plus proche au tg
+        cur = best_id;
+        iter++;                      //increm itercount
+    }
+    
 }
 
 // Fonction pour générer un tour géant
-//resultat aléatoires avec peu de variations
+//resultats aléatoires avec peu de variation
 void Solution::gen_tg_voisin_random(Instance& inst)
 {
     //std::default_random_engine generator;
