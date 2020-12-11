@@ -40,6 +40,7 @@ void Solution::gen_tg_random(Instance& inst)
         // ajouter le sommet au tour géant
         tour_geant.push_back(sommet);
     }
+    tour_geant.push_back(0);
 }
 
 
@@ -76,7 +77,7 @@ void Solution::gen_tg_voisin(Instance& inst)
         cur = best_id;
         iter++;                      //increm itercount
     }
-    
+    tour_geant.push_back(0); //Ajouter le dépot au tour géant
 }
 
 // Fonction pour générer un tour géant
@@ -161,6 +162,7 @@ void Solution::gen_tg_voisin_random(Instance& inst)
 
         iter++; //increm itercount, fin ttt d'un sommet
     }
+    tour_geant.push_back(0); //Ajouter le dépot au tour géant
 }
 
 bool Solution::check_solution(Instance inst)
@@ -200,9 +202,7 @@ bool Solution::check_solution(Instance inst)
     return ret;
 }
 
-/// <summary>
-/// Affiche le tour geant
-/// </summary>
+
 void Solution::afficher_tg()  const
 {
     if (!tour_geant.empty())
@@ -211,6 +211,74 @@ void Solution::afficher_tg()  const
         {
             std::cout << elem << "  ";
         }
-        std::cout << std::endl;
     }
+}
+
+void Solution::opt2()
+{
+    //init du générateur aléatoire
+    std::default_random_engine generator;
+    generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
+    std::uniform_int_distribution<int> distrib(1, int(tour_geant.size()) - 2);
+
+    int x = distrib(generator);
+    int y = distrib(generator);
+
+    int iter = 0;
+    //while (y == x || y == x + 1 || y== x-1 || iter < 100) //éviter de prendre 2 points n et n+1
+    while (y >=x-1 && y<= x+1 && iter <20) //éviter de prendre 2 points n et n+1
+    {
+        int y = distrib(generator);
+        iter++; //évite les boucles infinies pour les petits tg
+    }
+
+    std::cout << "x : " << x << "    y : " << y << std::endl;
+    //échange :
+    int saving = tour_geant[x];
+    tour_geant[x] = tour_geant[y];
+    tour_geant[y] = saving;
+    
+}
+
+void Solution::opt3()
+{
+    //init du générateur aléatoire
+    std::default_random_engine generator;
+    generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
+    std::uniform_int_distribution<int> distrib(1, int(tour_geant.size()) - 2);
+
+    int x = distrib(generator);
+    int y = distrib(generator);
+    int z = distrib(generator);
+
+    int iter = 0;
+    while (y >= x - 1 && y <= x + 1 && iter < 20) //éviter de prendre 2 points n et n+1
+    {
+        int y = distrib(generator);
+        iter++; //évite les boucles infinies pour les petits tg
+    }
+
+    iter = 0;
+    while (((z >= x - 1 && z <= x + 1) || (z >= y - 1 && z <= y + 1)) && iter < 40) //éviter de prendre 2 points n et n+1
+    {
+        int z = distrib(generator);
+        iter++; //évite les boucles infinies pour les petits tg
+    }
+
+    int saving = tour_geant[x];
+    tour_geant[x] = tour_geant[y];
+    tour_geant[y] = tour_geant[z];
+    tour_geant[z] = saving;
+
+}
+
+float Solution::cout_tg(Instance& inst)
+{
+    float res = 0;
+    for (int i= 0 ; i < tour_geant.size()-1 ; i++)
+    {
+        res += inst.D[tour_geant[i]][tour_geant[i + 1]];
+    }
+    cout = res;
+    return cout;
 }

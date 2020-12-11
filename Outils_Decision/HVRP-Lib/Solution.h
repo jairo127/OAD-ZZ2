@@ -41,7 +41,7 @@ public:
 	void gen_tg_voisin(Instance& inst);
 
 	/// <summary>
-	/// Fonction pour generer un tour geant
+	/// Affiche le tour geant
 	/// </summary>
 	void afficher_tg() const;
 
@@ -61,4 +61,12 @@ public:
 	/// <param name="inst">Instance de référence</param>
 	/// <returns>true si la solution est correcte sinon false</returns>
 	bool check_solution(Instance inst);
+
+	//calcul cout d'un tour géant
+	float cout_tg(Instance& inst);
+
+	void opt2();
+
+	void opt3();
+
 };

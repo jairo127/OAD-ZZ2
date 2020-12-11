@@ -110,7 +110,7 @@ void test_tg_voisin_random()
 
     Solution* ptr_sol = new Solution;
     Solution& sol = *ptr_sol;
-    
+
     sol.gen_tg_voisin_random(inst);
     sol.afficher_tg();
 
@@ -120,17 +120,73 @@ void test_tg_voisin_random()
     std::cout << "FINISHED : " << __func__ << std::endl << std::endl;
 }
 
-///////////////////////////////////////////////////////////////////
-//tests pseudo-unitaires :)
-//////////////////////////////////////////////////////////////////
+void test_opt2()
+{
+    std::cout << "EXECUTING : " << __func__ << std::endl;
+    Instance* ptr_instance = new Instance;
+    Instance& inst = *ptr_instance;
+    inst.lecture("HFVRP/HVRP_DLP_01");
+
+    Solution* ptr_sol = new Solution;
+    Solution& sol = *ptr_sol;
+
+    sol.gen_tg_voisin(inst); //voisin au lieu de voisin random pour plus de répétabilité
+    float deb = sol.cout_tg(inst);
+    sol.opt2();
+    sol.cout_tg(inst);
+    test_TG_SIZE(inst, sol);
+    test_TG_UNIQUE(inst, sol);
+
+    if (deb == sol.cout)
+    {
+        std::cout << "ERREUR : ";
+    }
+    std::cout << "Cout avant opt: " << deb << "    Cout post-opt: " << sol.cout<<std::endl;
+
+    std::cout << "FINISHED : " << __func__ << std::endl << std::endl;
+}
+
+void test_opt3()
+{
+    std::cout << "EXECUTING : " << __func__ << std::endl;
+    Instance* ptr_instance = new Instance;
+    Instance& inst = *ptr_instance;
+    inst.lecture("HFVRP/HVRP_DLP_01");
+
+    Solution* ptr_sol = new Solution;
+    Solution& sol = *ptr_sol;
+
+    sol.gen_tg_voisin(inst); //voisin au lieu de voisin random pour plus de répétabilité
+    float deb = sol.cout_tg(inst);
+    sol.opt3();
+    sol.cout_tg(inst); //maj cout
+
+    test_TG_SIZE(inst, sol);
+    test_TG_UNIQUE(inst, sol);
+
+    if (deb == sol.cout)
+    {
+        std::cout << "ERREUR : ";
+    }
+    std::cout << "Cout avant opt: " << deb << "    Cout post-opt: " << sol.cout << std::endl;
+
+    
+
+    std::cout << "FINISHED : " << __func__ << std::endl << std::endl;
+}
+
+
+  /////////////////////////////////////////////////////////////////
+ //              tests pseudo-unitaires :)                      //
+/////////////////////////////////////////////////////////////////
 
 //vérification de la taille du TG
 bool test_TG_SIZE(const Instance& inst, const Solution& sol)
 {
-    if (sol.tour_geant.size() != inst.nb_noeud + 1) //vérif taille du tg
+    if (sol.tour_geant.size() != inst.nb_noeud + 2) //vérif taille du tg
     {
-        std::cout << __func__ << ": ERR : sol.tour_geant.size() != inst.nb_noeud+1" << std::endl;
-        std::cout << sol.tour_geant.size() << " != " << inst.nb_noeud + 1 << std::endl << __func__ << " FAILED" << std::endl;
+        std::cout << __func__ << ": ERR : sol.tour_geant.size() != inst.nb_noeud+2" << std::endl; //+2 pour le départ du dépot et l'arrivée au dépot
+        std::cout << sol.tour_geant.size() << " != " << inst.nb_noeud + 2 << std::endl << __func__ << " FAILED" << std::endl;
         return false;
     }
     else
@@ -147,10 +203,9 @@ bool test_TG_UNIQUE(const Instance& inst, const Solution& sol)
 
     for (int i = 1; i < cptg.size(); i++)
     {
-        if (cptg[i - 1] == cptg[i])
+        if (cptg[i - 1] == cptg[i] && cptg[i] != 0) //dépot exclu de la vérification
         {
-            std::cout << __func__ << ": ERR : Duplicat : " << cptg[i] << std::endl;
-            std::cout << sol.tour_geant.size() << " != " << inst.nb_noeud + 1 << std::endl << __func__ << " FAILED" << std::endl;
+            std::cout << __func__ << " FAILED : Duplicat : " << cptg[i] <<  std::endl;
             return false;
         }
     }
