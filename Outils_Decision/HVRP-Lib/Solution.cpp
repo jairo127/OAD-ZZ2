@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Solution.h"
 
-Solution::Solution() : nb_tournee(0), cout(0)
+Solution::Solution() : nb_tournee(0), cout(0), dist(0)
 {
 }
 
@@ -231,8 +231,8 @@ void Solution::opt2()
         int y = distrib(generator);
         iter++; //évite les boucles infinies pour les petits tg
     }
+    auto cpy = tour_geant;
 
-    std::cout << "x : " << x << "    y : " << y << std::endl;
     //échange :
     int saving = tour_geant[x];
     tour_geant[x] = tour_geant[y];
@@ -272,13 +272,18 @@ void Solution::opt3()
 
 }
 
-float Solution::cout_tg(Instance& inst)
+float Solution::dist_tg(Instance& inst)
 {
     float res = 0;
     for (int i= 0 ; i < tour_geant.size()-1 ; i++)
     {
-        res += inst.D[tour_geant[i]][tour_geant[i + 1]];
+        res += inst.D[tour_geant[i]][tour_geant[i + 1]];  
     }
-    cout = res;
-    return cout;
+    return res;
+}
+
+
+void Solution::split(Instance& inst)
+{
+
 }

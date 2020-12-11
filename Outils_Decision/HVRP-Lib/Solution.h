@@ -31,6 +31,11 @@ public:
 	float cout;
 
 	/// <summary>
+	/// Distance totale du tour géant (= cout TSP)
+	/// </summary>
+	float dist;
+
+	/// <summary>
 	/// Constructeur par défaut de la solution
 	/// </summary>
 	Solution();
@@ -63,10 +68,12 @@ public:
 	bool check_solution(Instance inst);
 
 	//calcul cout d'un tour géant
-	float cout_tg(Instance& inst);
+	float dist_tg(Instance& inst);
 
 	void opt2();
 
 	void opt3();
+
+	void split(Instance& inst);
 
 };

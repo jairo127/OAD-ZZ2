@@ -131,9 +131,9 @@ void test_opt2()
     Solution& sol = *ptr_sol;
 
     sol.gen_tg_voisin(inst); //voisin au lieu de voisin random pour plus de répétabilité
-    float deb = sol.cout_tg(inst);
+    float deb = sol.dist_tg(inst);
     sol.opt2();
-    sol.cout_tg(inst);
+    sol.dist_tg(inst);
     test_TG_SIZE(inst, sol);
     test_TG_UNIQUE(inst, sol);
 
@@ -141,7 +141,7 @@ void test_opt2()
     {
         std::cout << "ERREUR : ";
     }
-    std::cout << "Cout avant opt: " << deb << "    Cout post-opt: " << sol.cout<<std::endl;
+    std::cout << "Cout avant opt: " << deb << "    Cout post-opt: " << sol.dist_tg(inst) <<std::endl;
 
     std::cout << "FINISHED : " << __func__ << std::endl << std::endl;
 }
@@ -157,9 +157,9 @@ void test_opt3()
     Solution& sol = *ptr_sol;
 
     sol.gen_tg_voisin(inst); //voisin au lieu de voisin random pour plus de répétabilité
-    float deb = sol.cout_tg(inst);
+    float deb = sol.dist_tg(inst);
     sol.opt3();
-    sol.cout_tg(inst); //maj cout
+    
 
     test_TG_SIZE(inst, sol);
     test_TG_UNIQUE(inst, sol);
@@ -168,7 +168,7 @@ void test_opt3()
     {
         std::cout << "ERREUR : ";
     }
-    std::cout << "Cout avant opt: " << deb << "    Cout post-opt: " << sol.cout << std::endl;
+    std::cout << "Cout avant opt: " << deb << "    Cout post-opt: " << sol.dist_tg(inst) << std::endl;
 
     
 
