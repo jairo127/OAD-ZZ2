@@ -70,9 +70,11 @@ public:
 	//calcul cout d'un tour géant
 	float dist_tg(Instance& inst);
 
-	void opt2();
+	void opt2(Instance& inst, int iter);
 
-	void opt3();
+	void inserer(Instance& inst);
+
+	void opt3(Instance& inst, int iter);
 
 	void split(Instance& inst);
 

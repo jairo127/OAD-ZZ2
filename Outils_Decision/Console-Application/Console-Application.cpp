@@ -19,8 +19,8 @@ int main()
 	//test_tg_random();
 	//test_tg_voisin();
 	//test_tg_voisin_random();
-	test_opt2();
-	test_opt3();
+	test_opt2(200); //nombre d'essai max pour opt
+	
 
 	return 0;
 }

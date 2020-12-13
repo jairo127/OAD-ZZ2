@@ -214,61 +214,95 @@ void Solution::afficher_tg()  const
     }
 }
 
-void Solution::opt2()
+void Solution::opt2(Instance& inst, int itermax)
 {
+    if (dist == 0) //si la distance n'est pas calculée
+    {
+        dist = dist_tg(inst);
+    }
+
     //init du générateur aléatoire
     std::default_random_engine generator;
+
     generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
     std::uniform_int_distribution<int> distrib(1, int(tour_geant.size()) - 2);
 
-    int x = distrib(generator);
-    int y = distrib(generator);
+    float newdist = dist + 1;
+    int loop = 0; // je sais pas si le prof veut ça
 
-    int iter = 0;
-    //while (y == x || y == x + 1 || y== x-1 || iter < 100) //éviter de prendre 2 points n et n+1
-    while (y >=x-1 && y<= x+1 && iter <20) //éviter de prendre 2 points n et n+1
+    while (loop < itermax)
     {
+        int x = distrib(generator);
         int y = distrib(generator);
-        iter++; //évite les boucles infinies pour les petits tg
-    }
-    auto cpy = tour_geant;
 
-    //échange :
-    int saving = tour_geant[x];
-    tour_geant[x] = tour_geant[y];
-    tour_geant[y] = saving;
-    
+        int tries = 0;
+        while (y >=x-1 && y<= x+1 && tries <20) //éviter de prendre 2 points n et n+1
+        {
+            int y = distrib(generator);
+            tries++; //évite les boucles infinies pour les petits tg
+        }
+       
+        float newdist = dist //la magie se produit quand la coloration synthaxique jette l'éponge :)
+                        - inst.D[tour_geant[x - 1]][tour_geant[x]] 
+                        - inst.D[tour_geant[x]][tour_geant[x + 1]]
+                        - inst.D[tour_geant[y - 1]][tour_geant[y]]
+                        - inst.D[tour_geant[y]][tour_geant[y + 1]]
+                        + inst.D[tour_geant[x - 1]][tour_geant[y]]
+                        + inst.D[tour_geant[y - 1]][tour_geant[x]]
+                        + inst.D[tour_geant[x]][tour_geant[y + 1]]
+                        + inst.D[tour_geant[y]][tour_geant[x + 1]];
+
+        if (newdist < dist) //évite la régresssion du score
+        {
+            //échange :
+            int saving = tour_geant[x];
+            tour_geant[x] = tour_geant[y];
+            tour_geant[y] = saving;
+            dist = newdist;
+            break;
+        }
+    }
 }
 
-void Solution::opt3()
+void Solution::inserer(Instance& inst)
 {
-    //init du générateur aléatoire
-    std::default_random_engine generator;
-    generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
-    std::uniform_int_distribution<int> distrib(1, int(tour_geant.size()) - 2);
+    //trouver le sommet avec le détour maximal
+    //index = 11; //placeholder
 
-    int x = distrib(generator);
-    int y = distrib(generator);
-    int z = distrib(generator);
+    //tour_geant.erase(vec.begin() + index);
 
-    int iter = 0;
-    while (y >= x - 1 && y <= x + 1 && iter < 20) //éviter de prendre 2 points n et n+1
-    {
-        int y = distrib(generator);
-        iter++; //évite les boucles infinies pour les petits tg
-    }
+}
 
-    iter = 0;
-    while (((z >= x - 1 && z <= x + 1) || (z >= y - 1 && z <= y + 1)) && iter < 40) //éviter de prendre 2 points n et n+1
-    {
-        int z = distrib(generator);
-        iter++; //évite les boucles infinies pour les petits tg
-    }
 
-    int saving = tour_geant[x];
-    tour_geant[x] = tour_geant[y];
-    tour_geant[y] = tour_geant[z];
-    tour_geant[z] = saving;
+void Solution::opt3(Instance& inst, int itermax) //pas demandé dans le TP
+{
+    ////init du générateur aléatoire
+    //std::default_random_engine generator;
+    //generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
+    //std::uniform_int_distribution<int> distrib(1, int(tour_geant.size()) - 2);
+
+    //int x = distrib(generator);
+    //int y = distrib(generator);
+    //int z = distrib(generator);
+
+    //int iter = 0;
+    //while (y >= x - 1 && y <= x + 1 && iter < 20) //éviter de prendre 2 points n et n+1
+    //{
+    //    int y = distrib(generator);
+    //    iter++; //évite les boucles infinies pour les petits tg
+    //}
+
+    //iter = 0;
+    //while (((z >= x - 1 && z <= x + 1) || (z >= y - 1 && z <= y + 1)) && iter < 40) //éviter de prendre 2 points n et n+1
+    //{
+    //    int z = distrib(generator);
+    //    iter++; //évite les boucles infinies pour les petits tg
+    //}
+
+    //int saving = tour_geant[x];
+    //tour_geant[x] = tour_geant[y];
+    //tour_geant[y] = tour_geant[z];
+    //tour_geant[z] = saving;
 
 }
 

@@ -120,7 +120,7 @@ void test_tg_voisin_random()
     std::cout << "FINISHED : " << __func__ << std::endl << std::endl;
 }
 
-void test_opt2()
+void test_opt2(int iter)
 {
     std::cout << "EXECUTING : " << __func__ << std::endl;
     Instance* ptr_instance = new Instance;
@@ -132,7 +132,7 @@ void test_opt2()
 
     sol.gen_tg_voisin(inst); //voisin au lieu de voisin random pour plus de répétabilité
     float deb = sol.dist_tg(inst);
-    sol.opt2();
+    sol.opt2(inst, iter);
     sol.dist_tg(inst);
     test_TG_SIZE(inst, sol);
     test_TG_UNIQUE(inst, sol);
@@ -146,7 +146,7 @@ void test_opt2()
     std::cout << "FINISHED : " << __func__ << std::endl << std::endl;
 }
 
-void test_opt3()
+void test_opt3(int iter)
 {
     std::cout << "EXECUTING : " << __func__ << std::endl;
     Instance* ptr_instance = new Instance;
@@ -158,7 +158,7 @@ void test_opt3()
 
     sol.gen_tg_voisin(inst); //voisin au lieu de voisin random pour plus de répétabilité
     float deb = sol.dist_tg(inst);
-    sol.opt3();
+    sol.opt3(inst, iter);
     
 
     test_TG_SIZE(inst, sol);
