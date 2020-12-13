@@ -162,7 +162,7 @@ void test_inserer()
     test_TG_SIZE(inst, sol);
     test_TG_UNIQUE(inst, sol);
 
-    std::cout << "Cout avant inserer(): " << deb << "    Cout post-inserer(): " << sol.dist_tg(inst) << std::endl;
+    //std::cout << "Cout avant inserer(): " << deb << "    Cout post-inserer(): " << sol.dist_tg(inst) << std::endl;
 
     std::cout << "FINISHED : " << __func__ << std::endl << std::endl;
 }
@@ -182,6 +182,27 @@ void test_split()
 
     sol.afficher_tg();
 }
+
+void test_r_locale(int itermax)
+{
+    std::cout << "EXECUTING : " << __func__ << std::endl;
+    Instance* ptr_instance = new Instance;
+    Instance& inst = *ptr_instance;
+    inst.lecture("HFVRP/HVRP_DLP_01");
+
+    Solution* ptr_sol = new Solution;
+    Solution& sol = *ptr_sol;
+
+    sol.gen_tg_voisin(inst); //voisin au lieu de voisin random pour plus de répétabilité
+    float deb = sol.dist_tg(inst);
+
+
+    sol.r_locale(inst, itermax);
+
+    test_TG_SIZE(inst, sol);
+    test_TG_UNIQUE(inst, sol);
+    std::cout << "Cout avant recherche locale: " << deb << "    Cout post-recherche locale : " << sol.dist_tg(inst) << std::endl;
+ }
 
 
   /////////////////////////////////////////////////////////////////

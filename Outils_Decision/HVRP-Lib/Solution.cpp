@@ -311,6 +311,10 @@ void Solution::inserer(Instance& inst)
         {
             tour_geant = cpy;
         }
+        else
+        {
+            dist = newdist;
+        }
     }
 
     //float newdist = dist_tg(inst)
@@ -353,18 +357,13 @@ float Solution::dist_tg(Instance& inst)
 void Solution::split(Instance& inst)
 {
     // START Algorithme SPLIT (avec les labels)
-    // (i = 1 ; i < tour_geant.size()-2 ; i++)
-    // tour_geant[1]
-
     labels[0].push_back(Label(inst)); 
     for (int i = 0; i < inst.nb_noeud; i++)
     {
-        //std::cout << "FOR 1\n";
         int j = i + 1; // prochain saut
         bool stop = false;
         
         while (!stop) {
-            //std::cout << "WHILE\n";
             float distance = -1;
             int charge = -1;
             
@@ -382,11 +381,9 @@ void Solution::split(Instance& inst)
             bool echec = true;
             for (int k = 0; k < labels[i].size(); k++)
             {
-                //std::cout << "FOR 2\n";
                 bool trop = false;
                 for (int l = inst.nb_type_camion; l > 0; l--)
                 {
-                    //std::cout << "FOR 3\n";
                     if (trop) break; // sortir de la boucle
                     if (labels[i][k].nb_camion_restant[l] > 0)
                     {
@@ -405,13 +402,11 @@ void Solution::split(Instance& inst)
                             bool inserted = false;
                             for (int m = 0; m < labels[j].size(); m++)
                             {
-                                // std::cout << "FOR 4\n";
                                 int cmp = label_temp.compare(labels[j][m]);
                                 if (cmp == 1)
                                 {
                                     insert_at_end = false;
                                     inserted = true;
-                                    // suppression des labels pere de celui écrasé ?
                                     labels[j][m] = label_temp;
                                     break;
                                 }
@@ -436,11 +431,35 @@ void Solution::split(Instance& inst)
             if (j > inst.nb_noeud || echec)
             {
                 stop = true;
-                //std::cout << "STOOOOOOOOOOOOOOOP\n";
             }
                 
         }
     }
     // END
+}
+
+void Solution::r_locale(Instance& inst, int itermax)
+{
+    std::default_random_engine generator;
+
+    generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
+    std::uniform_int_distribution<int> distrib(0,2);
+
+    int iter = 0;
+
+    while (iter<itermax)
+    {
+        int x = distrib(generator);
+
+        if (x==0)
+        {
+            inserer(inst);
+        }
+        else
+        {
+            opt2(inst, 20);
+        }
+        iter++;
+    }
 }
 

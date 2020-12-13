@@ -81,5 +81,5 @@ public:
 
 	void split(Instance& inst);
 
-	void r_locale(Instance& inst);
+	void r_locale(Instance& inst, int itermax);
 };

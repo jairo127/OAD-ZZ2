@@ -14,6 +14,8 @@ void test_tg_voisin_random();
 void test_opt2(int);
 void test_inserer();
 void test_split();
+void test_r_locale(int);
+
 
 /// <summary>
 /// Teste si la taille du tour-géant généré pour une instance est cohérente.
