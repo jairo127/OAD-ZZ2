@@ -16,6 +16,7 @@ void H_test_lecture()
 
 void H_test_label()
 {
+    // retourne 1 si gauche meilleur, 0 si incomparable et -1 si droit meilleur -2 si labels identiques
     Label l1, l2, l3, l4;
     
     // L1 = (2,1,1,1,20)
@@ -50,13 +51,14 @@ void H_test_label()
     l4.nb_camion_restant.push_back(1);
     l4.cout_total = 15;
 
-    std::cout << "Compare l1 et l2 = " << l1.compare(l2) << std::endl; // Supposé = 1
-    std::cout << "Compare l1 et l3 = " << l1.compare(l3) << std::endl; // Supposé = 0
-    std::cout << "Compare l1 et l4 = " << l1.compare(l4) << std::endl; // Supposé = 2
-    std::cout << "Compare l2 et l3 = " << l2.compare(l3) << std::endl; // Supposé = 2
-    std::cout << "Compare l2 et l4 = " << l2.compare(l4) << std::endl; // Supposé = 2
+    std::cout << "Compare l1 et l2 = " << l1.compare(l2) << std::endl; // Supposé = -1 //L2 //-1
+    std::cout << "Compare l1 et l3 = " << l1.compare(l3) << std::endl; // Supposé = 0 //incomp //0
+    std::cout << "Compare l1 et l4 = " << l1.compare(l4) << std::endl; // Supposé = -1 // -1
+
+    std::cout << "Compare l2 et l3 = " << l2.compare(l3) << std::endl; // Supposé = 1 //1
+    std::cout << "Compare l2 et l4 = " << l2.compare(l4) << std::endl; // Supposé = 0 //incomp
     // l3.camions ? l4.camions => 3
-    std::cout << "Compare l3 et l4 = " << l3.compare(l4) << std::endl; // Supposé = 0
+    std::cout << "Compare l3 et l4 = " << l3.compare(l4) << std::endl; // Supposé = 0 //incomp
 }
 
 
@@ -165,7 +167,20 @@ void test_inserer()
     std::cout << "FINISHED : " << __func__ << std::endl << std::endl;
 }
 
+void test_split()
+{
+    std::cout << "EXECUTING : " << __func__ << std::endl;
+    Instance* ptr_instance = new Instance;
+    Instance& inst = *ptr_instance;
+    inst.lecture("HFVRP/HVRP_DLP_01");
 
+    Solution* ptr_sol = new Solution;
+    Solution& sol = *ptr_sol;
+
+    sol.gen_tg_voisin(inst); //voisin au lieu de voisin random pour plus de répétabilité
+    sol.split(inst);
+    sol.afficher_tg();
+}
 
 
   /////////////////////////////////////////////////////////////////

@@ -15,12 +15,13 @@ int main()
 
 	// === HVRP ===
 	//H_test_lecture();
-	H_test_label();
+	//H_test_label();
 	//test_tg_random();
 	//test_tg_voisin();
 	//test_tg_voisin_random();
 	//test_opt2(200); //nombre d'essai max pour opt
 	//test_inserer();
+	test_split();
 	
 
 	return 0;

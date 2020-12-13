@@ -13,6 +13,7 @@ void test_tg_voisin();
 void test_tg_voisin_random();
 void test_opt2(int);
 void test_inserer();
+void test_split();
 
 /// <summary>
 /// Teste si la taille du tour-géant généré pour une instance est cohérente.

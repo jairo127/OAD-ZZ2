@@ -352,7 +352,7 @@ float Solution::dist_tg(Instance& inst)
 
 void Solution::split(Instance& inst)
 {
-    // START recherche min coût variable coût fixe et max capacite
+    /* START recherche min coût variable coût fixe et max capacite
     float cout_variable_min = INF, cout_fixe_min = INF;
     int capacite_max = 0;
 
@@ -387,9 +387,10 @@ void Solution::split(Instance& inst)
         Borne_inferieures[i] += inst.D[inst.nb_noeud][0];
         Borne_inferieures[i] = Borne_inferieures[i] * cout_variable_min + cout_fixe_min * nb_vehicule; // précalcul du coût
     }
-    // END
+    // END */
 
     // START Algorithme SPLIT (avec les labels)
+    Label labeltest = Label();
     labels[0][0] = Label();
     for (int i = 0; i < inst.nb_noeud; i++)
     {
@@ -430,43 +431,42 @@ void Solution::split(Instance& inst)
                             label_temp.label_pere = k;
                             label_temp.sommet_pere = i;
 
-                            //if (label_temp.cout_total + Borne_inferieures[j] < )
+                            // retourne 1 si gauche meilleur, 0 si incomparable et -1 si droit meilleur -2 si labels identiques
+                            bool insert_at_end = true;
+                            bool inserted = false;
+                            for (int m = 0; m < labels[j].size(); m++)
+                            {
+                                int cmp = label_temp.compare(labels[j][m]);
+                                if (cmp == 1)
+                                {
+                                    insert_at_end = false;
+                                    inserted = true;
+                                    // suppression des labels pere de celui écrasé ?
+                                    labels[j][m] = label_temp;
+                                    break;
+                                }
+                                if (cmp == 0)
+                                {
+                                    insert_at_end = true;
+                                }
+                            }
+                            if (!inserted && insert_at_end)
+                            {
+                                inserted = true;
+                                labels[j].push_back(label_temp);
+                            }
+                            if (!inserted)
+                                trop = true;
 
                         }
                     }
                 }
             }
+            j++;
+            if (j > inst.nb_noeud || echec)
+                stop = true;
         }
     }
     // END
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //int nb_camion[MAX_TYPE + 1];
-
-    //for (int i = 0; i < inst.nb_noeud; i++)
-    //{
-    //    int j = i + 1;
-    //    int distance, charge;
-    //    bool stop = false;
-    //    while (stop == false)
-    //    {
-    //        if (i + 1 == j)
-    //        {
-    //            //distance =
-    //        }
-    //    }
-    //} fin prem boucle
-
 }
 
