@@ -76,6 +76,7 @@ public:
 	void opt2(Instance& inst, int iter);
 
 	void inserer(Instance& inst);
+	void inserer2(Instance& inst);
 
 	void opt3(Instance& inst, int iter);
 

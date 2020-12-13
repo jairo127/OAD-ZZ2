@@ -5,8 +5,8 @@ Solution::Solution() : nb_tournee(0), cout(0), dist(0)
 {
 }
 
-// Fonction pour générer un tour géant de manière aléatoire
-// Résultat aléatoire
+// Fonction pour gï¿½nï¿½rer un tour gï¿½ant de maniï¿½re alï¿½atoire
+// Rï¿½sultat alï¿½atoire
 //A CORRIGER NE GEN PAS LE DERNIER SOMMET
 void Solution::gen_tg_random(Instance& inst)
 {
@@ -24,47 +24,47 @@ void Solution::gen_tg_random(Instance& inst)
 
     int index_max_val = inst.nb_noeud - 1;
 
-    // init dépôt
+    // init dï¿½pï¿½t
     tour_geant.push_back(0);
 
-    //cassé, ne génère pas le dernier noeud
+    //cassï¿½, ne gï¿½nï¿½re pas le dernier noeud
     for (int i = 1; i <= inst.nb_noeud; i++)
     {
         std::uniform_int_distribution<int> distrib(0, index_max_val);
-        // obtenir la position tirée  
+        // obtenir la position tirï¿½e  
         int x = distrib(generator);
 
         int sommet = sommets[x];
         sommets.erase(sommets.begin() + x);
         index_max_val--;
-        // ajouter le sommet au tour géant
+        // ajouter le sommet au tour gï¿½ant
         tour_geant.push_back(sommet);
     }
     tour_geant.push_back(0);
 }
 
 
-// Fonction pour générer un tour géant
-//resultat doit être tj le même
+// Fonction pour gï¿½nï¿½rer un tour gï¿½ant
+//resultat doit ï¿½tre tj le mï¿½me
 void Solution::gen_tg_voisin(Instance& inst)
 {
-    //une seule alloc dyn évite des montagnes de debug
-    //liste de bools pour savoir si le sommmet a été traité
+    //une seule alloc dyn ï¿½vite des montagnes de debug
+    //liste de bools pour savoir si le sommmet a ï¿½tï¿½ traitï¿½
     bool* s_parcourus = new bool[inst.nb_noeud+1];
     for (int i = 0; i < inst.nb_noeud+1; i++)
         s_parcourus[i] = false;
 
-    tour_geant.push_back(0); //Ajouter le dépot au tour géant
+    tour_geant.push_back(0); //Ajouter le dï¿½pot au tour gï¿½ant
 
-    //parcourir la liste des sommmets pour établir les plus proches
+    //parcourir la liste des sommmets pour ï¿½tablir les plus proches
     int iter = 0; //il faut faire le calcul du voisin 1x par sommet
     while (iter < inst.nb_noeud) 
     {
         int cur = 0;                //Sommet en cours de ttt
-        int best_id = -1;          //numero du sommet le plus proche de cur, init à -1
-        float best_dist = INF;    //distance du sommet le plus proche de cur, init à INF
+        int best_id = -1;          //numero du sommet le plus proche de cur, init ï¿½ -1
+        float best_dist = INF;    //distance du sommet le plus proche de cur, init ï¿½ INF
 
-        for (int j = 1; j < inst.nb_noeud+1; j++) //pas besoin de tester 0 à chaque fois
+        for (int j = 1; j < inst.nb_noeud+1; j++) //pas besoin de tester 0 ï¿½ chaque fois
         {
             if (!s_parcourus[j] && inst.D[cur][j]< best_dist) //si sommmet non ttt et distance plus basse
             {
@@ -77,28 +77,28 @@ void Solution::gen_tg_voisin(Instance& inst)
         cur = best_id;
         iter++;                      //increm itercount
     }
-    tour_geant.push_back(0); //Ajouter le dépot au tour géant
+    tour_geant.push_back(0); //Ajouter le dï¿½pot au tour gï¿½ant
 }
 
-// Fonction pour générer un tour géant
-//resultats aléatoires avec peu de variation
+// Fonction pour gï¿½nï¿½rer un tour gï¿½ant
+//resultats alï¿½atoires avec peu de variation
 void Solution::gen_tg_voisin_random(Instance& inst)
 {
-    //une seule alloc dyn évite des montagnes de debug
-    //liste de bools pour savoir si le sommmet a été traité
+    //une seule alloc dyn ï¿½vite des montagnes de debug
+    //liste de bools pour savoir si le sommmet a ï¿½tï¿½ traitï¿½
     bool* s_parcourus = new bool[inst.nb_noeud + 1];
     for (int i = 0; i < inst.nb_noeud + 1; i++)
     {
         s_parcourus[i] = false;
     }
 
-    tour_geant.push_back(0); //Ajouter le dépot au tour géant
+    tour_geant.push_back(0); //Ajouter le dï¿½pot au tour gï¿½ant
 
     std::vector<int> id_candidats;       //identifiants des 5 candidats les plus proches
     std::vector<float> dist_candidats;  //distance des 5 candidats les plus proches
 
 
-    //parcourir la liste des sommmets pour établir les plus proches
+    //parcourir la liste des sommmets pour ï¿½tablir les plus proches
     int iter = 0; //il faut faire le calcul du voisin 1x par sommet
     int cur = 0; //Sommet en cours de ttt
     while (iter < inst.nb_noeud)
@@ -106,11 +106,11 @@ void Solution::gen_tg_voisin_random(Instance& inst)
         id_candidats.clear();
         dist_candidats.clear();
 
-        for (int j = 1; j < inst.nb_noeud + 1; j++) //pas besoin de tester 0 à chaque fois
+        for (int j = 1; j < inst.nb_noeud + 1; j++) //pas besoin de tester 0 ï¿½ chaque fois
         {
             if (!s_parcourus[j]) //on ne regarde que les sommmets non-parcourus
             {
-                if (dist_candidats.empty()) //cas où le vecteur est vide
+                if (dist_candidats.empty()) //cas oï¿½ le vecteur est vide
                 {
                     id_candidats.push_back(j);
                     dist_candidats.push_back(inst.D[cur][j]);
@@ -120,9 +120,9 @@ void Solution::gen_tg_voisin_random(Instance& inst)
                     //parcourir le vecteur de candidats en partant du back() avec la valeur la plus grande
                     for (int k = (int(dist_candidats.size())-1); k >= 0; k--) //la conv en int est obligatoire
                     {
-                        if (dist_candidats[k] > inst.D[cur][j]) //tester si plus petit. si oui itérer.
+                        if (dist_candidats[k] > inst.D[cur][j]) //tester si plus petit. si oui itï¿½rer.
                         {
-                            continue; //decrem K. la val sera insérée
+                            continue; //decrem K. la val sera insï¿½rï¿½e
                         }
                         else if (dist_candidats.size() < 5) //il manque des candidats; ajouter
                         {
@@ -130,8 +130,8 @@ void Solution::gen_tg_voisin_random(Instance& inst)
                             dist_candidats.push_back(inst.D[cur][j]);
                         }
                         else //il faut break car dist_candidats[k] < inst.D[cur][j] && dist_candidats.size() = 5
-                        { //il faut tester si on écrit. 
-                            if (k<4) //insérer en position k+1 et break
+                        { //il faut tester si on ï¿½crit. 
+                            if (k<4) //insï¿½rer en position k+1 et break
                             {
                                 id_candidats.insert(id_candidats.begin() + k + 1, j);
                                 dist_candidats.insert(dist_candidats.begin() + k + 1, inst.D[cur][j]);
@@ -148,7 +148,7 @@ void Solution::gen_tg_voisin_random(Instance& inst)
                 }
             }
         }
-        //fin boucle qui itère sur les ddestinations possibles. 
+        //fin boucle qui itï¿½re sur les ddestinations possibles. 
         //Les 5 candidats les plus proches sont dans les vecteurs :
 
         std::default_random_engine generator;
@@ -162,7 +162,7 @@ void Solution::gen_tg_voisin_random(Instance& inst)
 
         iter++; //increm itercount, fin ttt d'un sommet
     }
-    tour_geant.push_back(0); //Ajouter le dépot au tour géant
+    tour_geant.push_back(0); //Ajouter le dï¿½pot au tour gï¿½ant
 }
 
 bool Solution::check_solution(Instance inst)
@@ -190,7 +190,7 @@ bool Solution::check_solution(Instance inst)
         for (int j = 0; j < tournees[i].nb_noeud; j++)
             v_noeuds[tournees[i].clients[j]]++;
     }
-    // verif si on dépasse pas le nombre de camion d'un type
+    // verif si on dï¿½passe pas le nombre de camion d'un type
     // on a le droit d'en utiliser moins que le nb dispo
     for (int i = 1; i <= inst.nb_type_camion; i++)
         if (v_camions[i] > inst.nb_camion[i])
@@ -216,19 +216,19 @@ void Solution::afficher_tg()  const
 
 void Solution::opt2(Instance& inst, int itermax)
 {
-    if (dist == 0) //si la distance n'est pas calculée
+    if (dist == 0) //si la distance n'est pas calculï¿½e
     {
         dist = dist_tg(inst);
     }
 
-    //init du générateur aléatoire
+    //init du gï¿½nï¿½rateur alï¿½atoire
     std::default_random_engine generator;
 
     generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
     std::uniform_int_distribution<int> distrib(1, int(tour_geant.size()) - 2);
 
     float newdist = dist + 1;
-    int loop = 0; // je sais pas si le prof veut ça
+    int loop = 0; // je sais pas si le prof veut ï¿½a
 
     while (loop < itermax)
     {
@@ -236,10 +236,10 @@ void Solution::opt2(Instance& inst, int itermax)
         int y = distrib(generator);
 
         int tries = 0;
-        while (y >=x-1 && y<= x+1 && tries <20) //éviter de prendre 2 points n et n+1
+        while (y >=x-1 && y<= x+1 && tries <20) //ï¿½viter de prendre 2 points n et n+1
         {
             int y = distrib(generator);
-            tries++; //évite les boucles infinies pour les petits tg
+            tries++; //ï¿½vite les boucles infinies pour les petits tg
         }
        
         float newdist = dist 
@@ -252,9 +252,9 @@ void Solution::opt2(Instance& inst, int itermax)
                         + inst.D[tour_geant[x]][tour_geant[y + 1]]
                         + inst.D[tour_geant[y]][tour_geant[x + 1]];
 
-        if (newdist < dist) //évite la régresssion du score
+        if (newdist < dist) //ï¿½vite la rï¿½gresssion du score
         {
-            //échange :
+            //ï¿½change :
             int saving = tour_geant[x];
             tour_geant[x] = tour_geant[y];
             tour_geant[y] = saving;
@@ -266,12 +266,12 @@ void Solution::opt2(Instance& inst, int itermax)
 
 void Solution::inserer(Instance& inst)
 {
-    if (dist == 0) //si la distance n'est pas calculée
+    if (dist == 0) //si la distance n'est pas calculï¿½e
     {
         dist = dist_tg(inst);
     }
 
-    //trouver le sommet avec le détour maximal
+    //trouver le sommet avec le dï¿½tour maximal
     float max = 0;
     int imax = 1;
 
@@ -287,7 +287,65 @@ void Solution::inserer(Instance& inst)
     }
     int val_max = tour_geant[imax];
 
-    //init du générateur aléatoire
+    //init du gï¿½nï¿½rateur alï¿½atoire
+    std::default_random_engine generator;
+
+    generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
+    std::uniform_int_distribution<int> distrib(1, int(tour_geant.size()) - 2);
+
+    float newdist = dist + 1;
+    int iter = 0;
+    int  itermax = 20;
+    int x = distrib(generator);
+
+    while (newdist > dist&& iter < itermax)
+    {
+        while (imax == x || imax+1 == x)
+        {
+            x = distrib(generator);
+        }
+
+        float newdist = dist
+                            - inst.D[tour_geant[imax - 1]][val_max]
+                            - inst.D[val_max][tour_geant[imax + 1]]
+                            - inst.D[tour_geant[x - 1]][tour_geant[x]]
+                            + inst.D[tour_geant[x - 1]][val_max]
+                            + inst.D[val_max][tour_geant[x]]
+                            + inst.D[tour_geant[imax - 1]][tour_geant[imax + 1]];
+        iter++;
+    }
+
+    tour_geant.erase(tour_geant.begin() + imax);
+    if (x > imax)
+        tour_geant.insert(tour_geant.begin() + x - 1, val_max);
+    else
+        tour_geant.insert(tour_geant.begin() + x, val_max);
+}
+
+void Solution::inserer2(Instance& inst)
+{
+    if (dist == 0) //si la distance n'est pas calculÃ©e
+    {
+        dist = dist_tg(inst);
+    }
+
+    //trouver le sommet avec le dÃ©tour maximal
+    float max = 0;
+    int imax = 1;
+
+    for (int i = 1; i < tour_geant.size(); i++)
+    {
+        float detour = inst.D[i - 1][i] + inst.D[i][i + 1];
+
+        if (detour > max)
+        {
+            max = detour;
+            imax = i;
+        }
+    }
+    int val_max = tour_geant[imax];
+
+    //init du gÃ©nÃ©rateur alÃ©atoire
     std::default_random_engine generator;
 
     generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
@@ -316,26 +374,10 @@ void Solution::inserer(Instance& inst)
             dist = newdist;
         }
     }
-
-    //float newdist = dist_tg(inst)
-    //                - inst.D[tour_geant[imax - 1]][val_max]
-    //                - inst.D[val_max][tour_geant[imax + 1]]
-
-    //                + inst.D[tour_geant[x-1]][val_max]
-    //                + inst.D[val_max][tour_geant[x]]
-
-    //                - inst.D[tour_geant[x-1]][tour_geant[x]];
-
-    //if (dist_tg(inst) != newdist)
-    //{
-    //    std::cout<<"ERREUR : "<< dist_tg(inst)<<"  !=  "<< newdist<<std::endl;
-    //}
-    //
-
 }
 
 
-void Solution::opt3(Instance& inst, int itermax) //pas demandé dans le TP
+void Solution::opt3(Instance& inst, int itermax) //pas demandï¿½ dans le TP
 {
     //int saving = tour_geant[x];
     //tour_geant[x] = tour_geant[y];
@@ -443,15 +485,15 @@ void Solution::r_locale(Instance& inst, int itermax)
     std::default_random_engine generator;
 
     generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
-    std::uniform_int_distribution<int> distrib(0,2);
+    std::uniform_int_distribution<int> distrib(0, 2);
 
     int iter = 0;
 
-    while (iter<itermax)
+    while (iter < itermax)
     {
         int x = distrib(generator);
 
-        if (x==0)
+        if (x == 0)
         {
             inserer(inst);
         }
@@ -462,4 +504,3 @@ void Solution::r_locale(Instance& inst, int itermax)
         iter++;
     }
 }
-

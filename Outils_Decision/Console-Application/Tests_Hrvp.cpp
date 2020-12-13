@@ -157,11 +157,11 @@ void test_inserer()
 
     sol.gen_tg_voisin(inst); //voisin au lieu de voisin random pour plus de répétabilité
     float deb = sol.dist_tg(inst);
-    sol.inserer(inst);
+    sol.inserer2(inst);
 
     test_TG_SIZE(inst, sol);
     test_TG_UNIQUE(inst, sol);
-
+    sol.afficher_tg();
     //std::cout << "Cout avant inserer(): " << deb << "    Cout post-inserer(): " << sol.dist_tg(inst) << std::endl;
 
     std::cout << "FINISHED : " << __func__ << std::endl << std::endl;
@@ -201,8 +201,9 @@ void test_r_locale(int itermax)
 
     test_TG_SIZE(inst, sol);
     test_TG_UNIQUE(inst, sol);
+
     std::cout << "Cout avant recherche locale: " << deb << "    Cout post-recherche locale : " << sol.dist_tg(inst) << std::endl;
- }
+}
 
 
   /////////////////////////////////////////////////////////////////
