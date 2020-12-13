@@ -352,64 +352,30 @@ float Solution::dist_tg(Instance& inst)
 
 void Solution::split(Instance& inst)
 {
-    /* START recherche min coût variable coût fixe et max capacite
-    float cout_variable_min = INF, cout_fixe_min = INF;
-    int capacite_max = 0;
-
-    for(int i = 1; i <= inst.nb_type_camion; i++)   {
-        if (inst.cout_variable_camion[i] < cout_variable_min)
-            cout_variable_min = inst.cout_variable_camion[i];
-        if (inst.cout_fixe_camion[i] < cout_fixe_min)
-            cout_fixe_min = inst.cout_fixe_camion[i];
-        if (inst.cap_camion[i] > capacite_max)
-            capacite_max = inst.cap_camion[i];
-    }
-    // END
-
-    // START Précalcul des valeurs minimales pour desservir les clients après le client i
-    std::vector<float> Borne_inferieures;
-    for (int i = 1; i < inst.nb_noeud; i++)
-    {
-        int nb_vehicule = 1;
-        Borne_inferieures[i] = 0;
-        int temp = 0;
-        for (int j = 1; j < inst.nb_noeud; j++)
-        {
-            Borne_inferieures[i] += inst.D[j][j + 1];
-            temp += inst.Q[i];
-            if (temp > capacite_max)
-            {
-                temp = inst.Q[i];
-                nb_vehicule++;
-            }
-        }
-        // partie bizarre ????
-        Borne_inferieures[i] += inst.D[inst.nb_noeud][0];
-        Borne_inferieures[i] = Borne_inferieures[i] * cout_variable_min + cout_fixe_min * nb_vehicule; // précalcul du coût
-    }
-    // END */
-
     // START Algorithme SPLIT (avec les labels)
-    labels[0].push_back(Label(inst));
+    // (i = 1 ; i < tour_geant.size()-2 ; i++)
+    // tour_geant[1]
+
+    labels[0].push_back(Label(inst)); 
     for (int i = 0; i < inst.nb_noeud; i++)
     {
-        std::cout << "FOR 1\n";
-        int j = i + 1;
+        //std::cout << "FOR 1\n";
+        int j = i + 1; // prochain saut
         bool stop = false;
         
         while (!stop) {
-            std::cout << "WHILE\n";
+            //std::cout << "WHILE\n";
             float distance = -1;
             int charge = -1;
             
             if (i + 1 == j)
             {
-                distance = inst.D[0][j] + inst.D[j][0];
+                distance = inst.D[0][tour_geant[j]] + inst.D[tour_geant[j]][0];
                 charge = inst.Q[j];
             }
             else
             {
-                distance = distance - inst.D[j-1][0] + inst.D[j-1][j] + inst.D[j][0];
+                distance = distance - inst.D[tour_geant[j-1]][0] + inst.D[tour_geant[j-1]][tour_geant[j]] + inst.D[tour_geant[j]][0];
                 charge += inst.Q[j];
             }
             
@@ -470,7 +436,7 @@ void Solution::split(Instance& inst)
             if (j > inst.nb_noeud || echec)
             {
                 stop = true;
-                std::cout << "STOOOOOOOOOOOOOOOP\n";
+                //std::cout << "STOOOOOOOOOOOOOOOP\n";
             }
                 
         }
