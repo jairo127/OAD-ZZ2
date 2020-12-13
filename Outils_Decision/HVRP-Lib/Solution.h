@@ -6,6 +6,7 @@
 //#include <iterator>
 #include "Constantes.h"
 #include "Tournee.h"
+#include "Label.h"
 
 class Solution
 {
@@ -34,6 +35,8 @@ public:
 	/// Distance totale du tour géant (= cout TSP)
 	/// </summary>
 	float dist;
+
+	std::vector<std::vector<Label>> labels;
 
 	/// <summary>
 	/// Constructeur par défaut de la solution
@@ -78,4 +81,5 @@ public:
 
 	void split(Instance& inst);
 
+	void r_locale(Instance& inst);
 };

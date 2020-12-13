@@ -15,6 +15,10 @@ public:
 	/// </summary>
 	float cout_total;
 
+	int sommet_pere;
+
+	int label_pere;
+
 	/// <summary>
 	/// Constructeur par défaut
 	/// </summary>

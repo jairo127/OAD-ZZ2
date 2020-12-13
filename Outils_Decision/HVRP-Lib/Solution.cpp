@@ -242,7 +242,7 @@ void Solution::opt2(Instance& inst, int itermax)
             tries++; //évite les boucles infinies pour les petits tg
         }
        
-        float newdist = dist //la magie se produit quand la coloration synthaxique jette l'éponge :)
+        float newdist = dist 
                         - inst.D[tour_geant[x - 1]][tour_geant[x]] 
                         - inst.D[tour_geant[x]][tour_geant[x + 1]]
                         - inst.D[tour_geant[y - 1]][tour_geant[y]]
@@ -266,44 +266,77 @@ void Solution::opt2(Instance& inst, int itermax)
 
 void Solution::inserer(Instance& inst)
 {
-    //trouver le sommet avec le détour maximal
-    //index = 11; //placeholder
+    if (dist == 0) //si la distance n'est pas calculée
+    {
+        dist = dist_tg(inst);
+    }
 
-    //tour_geant.erase(vec.begin() + index);
+    //trouver le sommet avec le détour maximal
+    float max = 0;
+    int imax = 1;
+
+    for (int i = 1; i < tour_geant.size(); i++)
+    {
+        float detour = inst.D[i - 1][i] + inst.D[i][i + 1];
+
+        if (detour > max)
+        {
+            max = detour;
+            imax = i;
+        }
+    }
+    int val_max = tour_geant[imax];
+
+    //init du générateur aléatoire
+    std::default_random_engine generator;
+
+    generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
+    std::uniform_int_distribution<int> distrib(1, int(tour_geant.size()) - 2);
+
+    auto cpy = tour_geant;
+    float newdist = dist + 1;
+
+    int iter = 0;
+    int  itermax = 20;
+
+    while (newdist > dist && iter < itermax)
+    {
+        int x = distrib(generator);
+        tour_geant.erase(tour_geant.begin() + imax);
+        tour_geant.insert(tour_geant.begin() + x, val_max);
+        newdist = dist_tg(inst);
+        iter++;
+
+        if (newdist > dist)
+        {
+            tour_geant = cpy;
+        }
+    }
+
+    //float newdist = dist_tg(inst)
+    //                - inst.D[tour_geant[imax - 1]][val_max]
+    //                - inst.D[val_max][tour_geant[imax + 1]]
+
+    //                + inst.D[tour_geant[x-1]][val_max]
+    //                + inst.D[val_max][tour_geant[x]]
+
+    //                - inst.D[tour_geant[x-1]][tour_geant[x]];
+
+    //if (dist_tg(inst) != newdist)
+    //{
+    //    std::cout<<"ERREUR : "<< dist_tg(inst)<<"  !=  "<< newdist<<std::endl;
+    //}
+    //
 
 }
 
 
 void Solution::opt3(Instance& inst, int itermax) //pas demandé dans le TP
 {
-    ////init du générateur aléatoire
-    //std::default_random_engine generator;
-    //generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
-    //std::uniform_int_distribution<int> distrib(1, int(tour_geant.size()) - 2);
-
-    //int x = distrib(generator);
-    //int y = distrib(generator);
-    //int z = distrib(generator);
-
-    //int iter = 0;
-    //while (y >= x - 1 && y <= x + 1 && iter < 20) //éviter de prendre 2 points n et n+1
-    //{
-    //    int y = distrib(generator);
-    //    iter++; //évite les boucles infinies pour les petits tg
-    //}
-
-    //iter = 0;
-    //while (((z >= x - 1 && z <= x + 1) || (z >= y - 1 && z <= y + 1)) && iter < 40) //éviter de prendre 2 points n et n+1
-    //{
-    //    int z = distrib(generator);
-    //    iter++; //évite les boucles infinies pour les petits tg
-    //}
-
     //int saving = tour_geant[x];
     //tour_geant[x] = tour_geant[y];
     //tour_geant[y] = tour_geant[z];
     //tour_geant[z] = saving;
-
 }
 
 float Solution::dist_tg(Instance& inst)
@@ -319,5 +352,121 @@ float Solution::dist_tg(Instance& inst)
 
 void Solution::split(Instance& inst)
 {
+    // START recherche min coût variable coût fixe et max capacite
+    float cout_variable_min = INF, cout_fixe_min = INF;
+    int capacite_max = 0;
+
+    for(int i = 1; i <= inst.nb_type_camion; i++)   {
+        if (inst.cout_variable_camion[i] < cout_variable_min)
+            cout_variable_min = inst.cout_variable_camion[i];
+        if (inst.cout_fixe_camion[i] < cout_fixe_min)
+            cout_fixe_min = inst.cout_fixe_camion[i];
+        if (inst.cap_camion[i] > capacite_max)
+            capacite_max = inst.cap_camion[i];
+    }
+    // END
+
+    // START Précalcul des valeurs minimales pour desservir les clients après le client i
+    std::vector<float> Borne_inferieures;
+    for (int i = 1; i < inst.nb_noeud; i++)
+    {
+        int nb_vehicule = 1;
+        Borne_inferieures[i] = 0;
+        int temp = 0;
+        for (int j = 1; j < inst.nb_noeud; j++)
+        {
+            Borne_inferieures[i] += inst.D[j][j + 1];
+            temp += inst.Q[i];
+            if (temp > capacite_max)
+            {
+                temp = inst.Q[i];
+                nb_vehicule++;
+            }
+        }
+        // partie bizarre ????
+        Borne_inferieures[i] += inst.D[inst.nb_noeud][0];
+        Borne_inferieures[i] = Borne_inferieures[i] * cout_variable_min + cout_fixe_min * nb_vehicule; // précalcul du coût
+    }
+    // END
+
+    // START Algorithme SPLIT (avec les labels)
+    labels[0][0] = Label();
+    for (int i = 0; i < inst.nb_noeud; i++)
+    {
+        int j = i + 1;
+        bool stop = false;
+        
+        while (!stop) {
+            float distance = -1;
+            int charge = -1;
+            
+            if (i + 1 == j)
+            {
+                distance = inst.D[0][j] + inst.D[j][0];
+                charge = inst.Q[j];
+            }
+            else
+            {
+                distance = distance - inst.D[j-1][0] + inst.D[j-1][j] + inst.D[j][0];
+                charge += inst.Q[j];
+            }
+            
+            bool echec = true;
+            for (int k = 0; k < labels[i].size(); k++)
+            {
+                bool trop = false;
+                for (int l = inst.nb_type_camion; l > 0; l--)
+                {
+                    if (trop) break; // sortir de la boucle
+                    if (labels[i][k].nb_camion_restant[l] > 0)
+                    {
+                        if (inst.cap_camion[l] > charge)
+                        {
+                            echec = false;
+                            Label label_temp = labels[i][k]; // Attention au constructeur de copie
+                            float cout = distance * inst.cout_variable_camion[l] + inst.cout_fixe_camion[l]; // cout = distance * Vl + Fl
+                            label_temp.cout_total += cout;
+                            label_temp.nb_camion_restant[l]--;
+                            label_temp.label_pere = k;
+                            label_temp.sommet_pere = i;
+
+                            //if (label_temp.cout_total + Borne_inferieures[j] < )
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+    // END
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //int nb_camion[MAX_TYPE + 1];
+
+    //for (int i = 0; i < inst.nb_noeud; i++)
+    //{
+    //    int j = i + 1;
+    //    int distance, charge;
+    //    bool stop = false;
+    //    while (stop == false)
+    //    {
+    //        if (i + 1 == j)
+    //        {
+    //            //distance =
+    //        }
+    //    }
+    //} fin prem boucle
 
 }
+

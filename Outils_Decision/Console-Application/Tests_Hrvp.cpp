@@ -137,16 +137,13 @@ void test_opt2(int iter)
     test_TG_SIZE(inst, sol);
     test_TG_UNIQUE(inst, sol);
 
-    if (deb == sol.cout)
-    {
-        std::cout << "ERREUR : ";
-    }
     std::cout << "Cout avant opt: " << deb << "    Cout post-opt: " << sol.dist_tg(inst) <<std::endl;
 
     std::cout << "FINISHED : " << __func__ << std::endl << std::endl;
 }
 
-void test_opt3(int iter)
+
+void test_inserer()
 {
     std::cout << "EXECUTING : " << __func__ << std::endl;
     Instance* ptr_instance = new Instance;
@@ -158,22 +155,17 @@ void test_opt3(int iter)
 
     sol.gen_tg_voisin(inst); //voisin au lieu de voisin random pour plus de répétabilité
     float deb = sol.dist_tg(inst);
-    sol.opt3(inst, iter);
-    
+    sol.inserer(inst);
 
     test_TG_SIZE(inst, sol);
     test_TG_UNIQUE(inst, sol);
 
-    if (deb == sol.cout)
-    {
-        std::cout << "ERREUR : ";
-    }
-    std::cout << "Cout avant opt: " << deb << "    Cout post-opt: " << sol.dist_tg(inst) << std::endl;
-
-    
+    std::cout << "Cout avant inserer(): " << deb << "    Cout post-inserer(): " << sol.dist_tg(inst) << std::endl;
 
     std::cout << "FINISHED : " << __func__ << std::endl << std::endl;
 }
+
+
 
 
   /////////////////////////////////////////////////////////////////

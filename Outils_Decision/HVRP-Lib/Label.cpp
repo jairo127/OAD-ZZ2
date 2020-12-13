@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Label.h"
 
-Label::Label() : cout_total(0)
+Label::Label() : cout_total(0), sommet_pere(-1), label_pere(-1)
 {
 }
 
@@ -15,6 +15,7 @@ int Label::compare(Label l)
 {
 	int h1 = 1; // hyp this < l
 	int h2 = 2; // hyp this > l
+
 	int cmp_camion = 1; // 1 si this < l sinon -1 et 0 si incomparable
 	bool identique = false;
 	// Comparaison des camions restants
