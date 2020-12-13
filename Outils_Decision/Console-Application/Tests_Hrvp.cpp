@@ -179,6 +179,7 @@ void test_split()
 
     sol.gen_tg_voisin(inst); //voisin au lieu de voisin random pour plus de répétabilité
     sol.split(inst);
+
     sol.afficher_tg();
 }
 

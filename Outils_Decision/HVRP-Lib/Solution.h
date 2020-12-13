@@ -36,7 +36,7 @@ public:
 	/// </summary>
 	float dist;
 
-	std::vector<std::vector<Label>> labels;
+	std::vector<Label> labels[MAX_NOEUD];
 
 	/// <summary>
 	/// Constructeur par défaut de la solution

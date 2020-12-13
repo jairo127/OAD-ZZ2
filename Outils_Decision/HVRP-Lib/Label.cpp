@@ -5,10 +5,11 @@ Label::Label() : cout_total(0), sommet_pere(-1), label_pere(-1)
 {
 }
 
-Label::Label(Instance inst) : cout_total(0)
+Label::Label(Instance & inst) : cout_total(0), sommet_pere(-1), label_pere(-1)
 {
+	nb_camion_restant.push_back(0);
 	for (int i = 1; i <= inst.nb_type_camion; i++)
-		nb_camion_restant[i] = inst.nb_camion[i];
+		nb_camion_restant.push_back(inst.nb_camion[i]);
 }
 
 int Label::compare(Label l)

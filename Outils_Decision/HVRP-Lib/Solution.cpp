@@ -390,14 +390,15 @@ void Solution::split(Instance& inst)
     // END */
 
     // START Algorithme SPLIT (avec les labels)
-    Label labeltest = Label();
-    labels[0][0] = Label();
+    labels[0].push_back(Label(inst));
     for (int i = 0; i < inst.nb_noeud; i++)
     {
+        std::cout << "FOR 1\n";
         int j = i + 1;
         bool stop = false;
         
         while (!stop) {
+            std::cout << "WHILE\n";
             float distance = -1;
             int charge = -1;
             
@@ -415,9 +416,11 @@ void Solution::split(Instance& inst)
             bool echec = true;
             for (int k = 0; k < labels[i].size(); k++)
             {
+                //std::cout << "FOR 2\n";
                 bool trop = false;
                 for (int l = inst.nb_type_camion; l > 0; l--)
                 {
+                    //std::cout << "FOR 3\n";
                     if (trop) break; // sortir de la boucle
                     if (labels[i][k].nb_camion_restant[l] > 0)
                     {
@@ -436,6 +439,7 @@ void Solution::split(Instance& inst)
                             bool inserted = false;
                             for (int m = 0; m < labels[j].size(); m++)
                             {
+                                // std::cout << "FOR 4\n";
                                 int cmp = label_temp.compare(labels[j][m]);
                                 if (cmp == 1)
                                 {
@@ -450,7 +454,7 @@ void Solution::split(Instance& inst)
                                     insert_at_end = true;
                                 }
                             }
-                            if (!inserted && insert_at_end)
+                            if (!inserted && insert_at_end && labels[j].size() < 20)
                             {
                                 inserted = true;
                                 labels[j].push_back(label_temp);
@@ -464,7 +468,11 @@ void Solution::split(Instance& inst)
             }
             j++;
             if (j > inst.nb_noeud || echec)
+            {
                 stop = true;
+                std::cout << "STOOOOOOOOOOOOOOOP\n";
+            }
+                
         }
     }
     // END

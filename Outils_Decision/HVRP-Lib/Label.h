@@ -29,7 +29,7 @@ public:
 	/// A utiliser de préférence !
 	/// </summary>
 	/// <param name="inst">Instance de référence</param>
-	Label(Instance inst);
+	Label(Instance & inst);
 
 	/// <summary>
 	/// Compare ce label à un label l
