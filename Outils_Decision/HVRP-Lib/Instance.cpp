@@ -62,7 +62,7 @@ void Instance::GraspHVRP(int iterMax)
 	//std::cout << "HASH : " << hash << std::endl;
 	hashtable[hash] = 1;
 
-	//génération des vecteurs fils :
+	//génération des solutions fils :
 	std::default_random_engine generator;
 	// random seed
 	generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
@@ -78,14 +78,14 @@ void Instance::GraspHVRP(int iterMax)
 		{
 			Solution fils = sol;
 
-			//tirer x et y (x != y) au hasard entre 0 et nb-1
+			//tirer x et y (x != y) au hasard entre 1 et nb_noeud
 			int x = distrib(generator);
 			int y = distrib(generator);
 
 			while (y == x)
 				y = distrib(generator);
 
-			//échanger V[x] et V[y]
+			//échanger 2 noeud du tour geant
 			fils.tour_geant[y] = sol.tour_geant[x];
 			fils.tour_geant[x] = sol.tour_geant[y];
 
