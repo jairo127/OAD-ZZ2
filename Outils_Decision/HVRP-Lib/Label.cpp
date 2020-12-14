@@ -16,16 +16,6 @@ int Label::compare(Label l)
 {
 	// retourne 1 si gauche meilleur, 0 si incomparable et -1 si droit meilleur -2 si labels identiques 
 
-	// label gauche (= celui qui apelle la méthode) = g , label droit = d
-	//comaration des labels : couts et camion restants :
-	// CAMIONS RESTANTS : 
-	// - identiques -> cmp_camion = 0 (la verif se joue sur le cout total)
-
-	// - identique sauf g[i] < d[i] -> cmp_camion = 1 (gauche est plus petit droit pour les camions restants)
-	// - identique sauf g[i] < d[i] et g[j] > d[i] -> incomparables !!!
-	//si meme  nombre de camions restants : compa cout
-	
-
 	bool left = false; //passent true si un des labels est meilleur 
 	bool right = false;
 

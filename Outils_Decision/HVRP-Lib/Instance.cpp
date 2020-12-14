@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "Instance.h"
 #include <fstream>
+#include <functional>
+#include <vector>
+#include "Solution.h"
 
 void Instance::lecture(std::string file_name)
 {
@@ -42,55 +45,59 @@ void Instance::afficher()
 
 void Instance::GraspHVRP(int iterMax)
 {
-	/*
+	
 	// Création et initialisation de la table de hachage
 	int MaxRetry = 100;
+	unsigned int HashMax = 9999999;
 	int* hashtable = new int[HashMax];
 	for (int i = 0; i < HashMax; i++)
 		hashtable[i] = 0;
 
 	int iter = 0;
-	BierwithVector vector; //premier vecteur
-	vector.Generer_Aleatoirement(*this); // génération aléatoire
-	vector.Evaluer(*this);
-	vector.Recherche_Locale(*this, 100);
-	std::cout << "Cout avant la recherche Globale : ";
-	vector.AfficherCout();
-	hashtable[vector.CalcHash(*this)] = 1;
+	Solution sol; //premiere solution
+	sol.gen_tg_voisin_random(*this);
+	sol.r_locale(*this, 10000);
+	std::cout << "Cout avant la recherche locale : " << sol.dist_tg(*this) << std::endl;
+	int hash = sol.hash_solution(*this, HashMax);
+	//std::cout << "HASH : " << hash << std::endl;
+	hashtable[hash] = 1;
 
 	//génération des vecteurs fils :
-	default_random_engine generator;
+	std::default_random_engine generator;
 	// random seed
 	generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
-	uniform_int_distribution<int> distrib(0, n * m - 1);
+	std::uniform_int_distribution<int> distrib(1, nb_noeud); // risque de plantage ici
 
 	while (iter < iterMax)
 	{
-		BierwithVector t_fils[10]; // 10 fils
+		Solution t_fils[10]; // 10 fils
 		int retry = 0;
 
 		// Obtention des fils
 		for (int i = 0; i < 10; i++)
 		{
-			BierwithVector fils = vector;
+			Solution fils = sol;
 
 			//tirer x et y (x != y) au hasard entre 0 et nb-1
 			int x = distrib(generator);
 			int y = distrib(generator);
+
 			while (y == x)
 				y = distrib(generator);
 
 			//échanger V[x] et V[y]
-			fils.V[y] = vector.V[x];
-			fils.V[x] = vector.V[y];
+			fils.tour_geant[y] = sol.tour_geant[x];
+			fils.tour_geant[x] = sol.tour_geant[y];
 
 			//recherche locale du fils, hash, évaluer
-			fils.Recherche_Locale(*this, 50);
-
+			fils.r_locale(*this, 50);
+			
+			hash = fils.hash_solution(*this, HashMax);
+			//std::cout << "HASH : " << hash << std::endl;
 			// Si hash pas présent, ajout aux hash et aux 10 fils sinon i--
-			if (hashtable[fils.CalcHash(*this)] != 1 && retry < MaxRetry)
+			if (hashtable[hash] != 1 && retry < MaxRetry)
 			{
-				hashtable[fils.CalcHash(*this)] = 1;
+				hashtable[hash] = 1;
 				t_fils[i] = fils;
 				retry = 0;
 			}
@@ -107,20 +114,16 @@ void Instance::GraspHVRP(int iterMax)
 		// Recherche du meilleur fils
 		int jmax = 0;
 		for (int j = 1; j < 10; j++)
-			if (t_fils[j].cout < t_fils[jmax].cout)
+			if (t_fils[j].dist_tg(*this) < t_fils[jmax].dist_tg(*this))
 				jmax = j;
 
 		// Réitération sur le meilleur fils
-		vector = t_fils[jmax];
+		sol = t_fils[jmax];
 
 		iter++;
 	}
 
 	// Affichage du résultat
-	vector.AfficherVecteur();
-	std::cout << "Résulat final :" << std::endl;
-	vector.AfficherCout();
-
-	// aller merci au revoir
-	*/
+	sol.afficher_tg();
+	std::cout << "Résulat final : " << sol.dist_tg(*this) << std::endl;
 }

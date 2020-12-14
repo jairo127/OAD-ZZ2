@@ -226,6 +226,15 @@ void test_r_locale(int itermax)
     std::cout << "Cout avant recherche locale: " << deb << "  Cout post-recherche locale : " << sol.dist_tg(inst) << std::endl;
 }
 
+void test_grasp_hvrp(int valeur)
+{
+    std::cout << "EXECUTING : " << __func__ << std::endl;
+    Instance* ptr_instance = new Instance;
+    Instance& inst = *ptr_instance;
+    inst.lecture("HFVRP/HVRP_DLP_01");
+    inst.GraspHVRP(valeur);
+    std::cout << "Fin test GRASP" << std::endl;
+}
 
   /////////////////////////////////////////////////////////////////
  //              tests pseudo-unitaires :)                      //

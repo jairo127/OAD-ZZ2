@@ -16,6 +16,7 @@ void test_inserer();
 void test_r_locale(int);
 void test_split();
 void test_r_locale(int);
+void test_grasp_hvrp(int);
 
 
 

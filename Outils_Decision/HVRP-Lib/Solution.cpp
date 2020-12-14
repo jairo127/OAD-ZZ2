@@ -228,7 +228,7 @@ void Solution::opt2(Instance& inst, int itermax)
     std::uniform_int_distribution<int> distrib(1, int(tour_geant.size()) - 2);
 
     float newdist = dist + 1;
-    int loop = 0; // je sais pas si le prof veut �a
+    int loop = 0; 
 
     while (loop < itermax)
     {
@@ -236,7 +236,7 @@ void Solution::opt2(Instance& inst, int itermax)
         int y = distrib(generator);
 
         int tries = 0;
-        while (y >=x-1 && y<= x+1 && tries <20) //�viter de prendre 2 points n et n+1
+        while (y >=x-1 && y<= x+1 && tries <20) //eviter de prendre 2 points n et n+1
         {
             int y = distrib(generator);
             tries++; //evite les boucles infinies pour les petits tg
@@ -252,7 +252,7 @@ void Solution::opt2(Instance& inst, int itermax)
                         + inst.D[tour_geant[x]][tour_geant[y + 1]]
                         + inst.D[tour_geant[y]][tour_geant[x + 1]];
 
-        if (newdist < dist) //�vite la r�gresssion du score
+        if (newdist < dist) //evite la regresssion du score
         {
             //�change :
             int saving = tour_geant[x];
@@ -266,12 +266,12 @@ void Solution::opt2(Instance& inst, int itermax)
 
 void Solution::inserer(Instance& inst)
 {
-    if (dist == 0) //si la distance n'est pas calcul�e
+    if (dist == 0) //si la distance n'est pas calculee
     {
         dist = dist_tg(inst);
     }
 
-    //trouver le sommet avec le d�tour maximal
+    //trouver le sommet avec le detour maximal
     float max = 0;
     int imax = 1;
 
@@ -287,7 +287,7 @@ void Solution::inserer(Instance& inst)
     }
     int val_max = tour_geant[imax];
 
-    //init du g�n�rateur al�atoire
+    //init du generateur aleatoire
     std::default_random_engine generator;
 
     generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
@@ -470,8 +470,19 @@ void Solution::r_locale(Instance& inst, int itermax)
         }
         iter++;
     }
-    afficher_tg();
+    //afficher_tg();
     
-    std::cout << std::endl << dist_tg(inst) << std::endl;
+    //std::cout << std::endl << dist_tg(inst) << std::endl;
 
+}
+
+unsigned int Solution::hash_solution(Instance& inst, int Hashmax)
+{
+    unsigned int hash = 0;
+    float dist = dist_tg(inst);
+    for (int i = 1; i <= inst.nb_noeud; i++)
+    {
+        hash += dist * tour_geant[i];
+    }
+    return hash % Hashmax;
 }

@@ -83,4 +83,6 @@ public:
 	Label find_best_label(Instance& inst);
 
 	void r_locale(Instance& inst, int itermax);
+
+	unsigned int hash_solution(Instance& inst, int Hashmax);
 };

@@ -21,8 +21,9 @@ int main()
 	//test_tg_voisin_random();
 	//test_opt2(200); //nombre d'essai max pour opt
 	//test_inserer();
-	test_r_locale(10000);
+	//test_r_locale(10000);
 	//test_split();
+	test_grasp_hvrp(1000);
 	
 
 	return 0;
