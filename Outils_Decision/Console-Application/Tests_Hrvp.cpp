@@ -157,7 +157,7 @@ void test_inserer()
 
     sol.gen_tg_voisin(inst); //voisin au lieu de voisin random pour plus de répétabilité
     float deb = sol.dist_tg(inst);
-    sol.inserer2(inst);
+    sol.inserer(inst);
 
     test_TG_SIZE(inst, sol);
     test_TG_UNIQUE(inst, sol);
@@ -206,16 +206,24 @@ void test_r_locale(int itermax)
     Solution* ptr_sol = new Solution;
     Solution& sol = *ptr_sol;
 
-    sol.gen_tg_voisin(inst); //voisin au lieu de voisin random pour plus de répétabilité
+    sol.gen_tg_voisin_random(inst);
     float deb = sol.dist_tg(inst);
 
 
     sol.r_locale(inst, itermax);
+    //sol.afficher_tg();
+
+    //Solution* ptr_sol2 = new Solution;
+    //Solution& sol2 = *ptr_sol;
+
+ /*   sol2.tour_geant = sol.tour_geant;
+    std::cout << sol2.dist_tg(inst) << std::endl;*/
 
     test_TG_SIZE(inst, sol);
     test_TG_UNIQUE(inst, sol);
 
-    std::cout << "Cout avant recherche locale: " << deb << "    Cout post-recherche locale : " << sol.dist_tg(inst) << std::endl;
+
+    std::cout << "Cout avant recherche locale: " << deb << "  Cout post-recherche locale : " << sol.dist_tg(inst) << std::endl;
 }
 
 

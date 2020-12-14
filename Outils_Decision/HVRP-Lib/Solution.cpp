@@ -221,7 +221,7 @@ void Solution::opt2(Instance& inst, int itermax)
         dist = dist_tg(inst);
     }
 
-    //init du g�n�rateur al�atoire
+    //init du generateur al�atoire
     std::default_random_engine generator;
 
     generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
@@ -239,7 +239,7 @@ void Solution::opt2(Instance& inst, int itermax)
         while (y >=x-1 && y<= x+1 && tries <20) //�viter de prendre 2 points n et n+1
         {
             int y = distrib(generator);
-            tries++; //�vite les boucles infinies pour les petits tg
+            tries++; //evite les boucles infinies pour les petits tg
         }
        
         float newdist = dist 
@@ -295,7 +295,7 @@ void Solution::inserer(Instance& inst)
 
     float newdist = dist + 1;
     int iter = 0;
-    int  itermax = 20;
+    int  itermax = 200;
     int x = distrib(generator);
 
     while (newdist > dist&& iter < itermax)
@@ -320,60 +320,8 @@ void Solution::inserer(Instance& inst)
         tour_geant.insert(tour_geant.begin() + x - 1, val_max);
     else
         tour_geant.insert(tour_geant.begin() + x, val_max);
-}
 
-void Solution::inserer2(Instance& inst)
-{
-    if (dist == 0) //si la distance n'est pas calculée
-    {
-        dist = dist_tg(inst);
-    }
-
-    //trouver le sommet avec le détour maximal
-    float max = 0;
-    int imax = 1;
-
-    for (int i = 1; i < tour_geant.size(); i++)
-    {
-        float detour = inst.D[i - 1][i] + inst.D[i][i + 1];
-
-        if (detour > max)
-        {
-            max = detour;
-            imax = i;
-        }
-    }
-    int val_max = tour_geant[imax];
-
-    //init du générateur aléatoire
-    std::default_random_engine generator;
-
-    generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
-    std::uniform_int_distribution<int> distrib(1, int(tour_geant.size()) - 2);
-
-    auto cpy = tour_geant;
-    float newdist = dist + 1;
-
-    int iter = 0;
-    int  itermax = 20;
-
-    while (newdist > dist && iter < itermax)
-    {
-        int x = distrib(generator);
-        tour_geant.erase(tour_geant.begin() + imax);
-        tour_geant.insert(tour_geant.begin() + x, val_max);
-        newdist = dist_tg(inst);
-        iter++;
-
-        if (newdist > dist)
-        {
-            tour_geant = cpy;
-        }
-        else
-        {
-            dist = newdist;
-        }
-    }
+    dist = newdist;
 }
 
 
@@ -381,6 +329,7 @@ void Solution::opt3(Instance& inst, int itermax) //pas demand� dans le TP
 {
     //int saving = tour_geant[x];
     //tour_geant[x] = tour_geant[y];
+
     //tour_geant[y] = tour_geant[z];
     //tour_geant[z] = saving;
 }
@@ -503,7 +452,7 @@ void Solution::r_locale(Instance& inst, int itermax)
     std::default_random_engine generator;
 
     generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
-    std::uniform_int_distribution<int> distrib(0, 2);
+    std::uniform_int_distribution<int> distrib(0, 10000);
 
     int iter = 0;
 
@@ -513,12 +462,16 @@ void Solution::r_locale(Instance& inst, int itermax)
 
         if (x == 0)
         {
-            inserer(inst);
+            //inserer(inst);
         }
         else
         {
-            opt2(inst, 20);
+            opt2(inst, 95);
         }
         iter++;
     }
+    afficher_tg();
+    
+    std::cout << std::endl << dist_tg(inst) << std::endl;
+
 }
