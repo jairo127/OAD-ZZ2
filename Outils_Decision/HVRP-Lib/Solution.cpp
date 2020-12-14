@@ -480,6 +480,24 @@ void Solution::split(Instance& inst)
     // END
 }
 
+Label Solution::find_best_label(Instance& inst)
+{
+    int index = -1;
+    float min = INF;
+    for (int i = 0; i < labels[inst.nb_noeud].size(); i++)
+    {
+        if (labels[inst.nb_noeud][i].cout_total < min)
+        {
+            index = i;
+            min = labels[inst.nb_noeud][i].cout_total;
+        }
+    }
+    if (index != -1)
+        return labels[inst.nb_noeud][index];
+    else
+        return Label();
+}
+
 void Solution::r_locale(Instance& inst, int itermax)
 {
     std::default_random_engine generator;

@@ -63,5 +63,7 @@ public:
 	/// </summary>
 	void afficher();
 
+	void GraspHVRP(int iterMax);
+
 };
 

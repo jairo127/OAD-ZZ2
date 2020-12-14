@@ -181,6 +181,19 @@ void test_split()
     sol.split(inst);
 
     sol.afficher_tg();
+    Label best = sol.find_best_label(inst);
+    std::cout << "Cout de la solution du split : " << best.cout_total << std::endl;
+    for (int i = 1; i <= inst.nb_type_camion; i++)
+    {
+        std::cout << "Camion n " << i << " - " << inst.nb_camion[i] - best.nb_camion_restant[i] << " utilises - "
+            << "CF = " << inst.cout_fixe_camion[i] << " - CV = " << inst.cout_variable_camion[i] << std::endl;
+    }
+    float somme = 0;
+    for (int i = 0; i <= inst.nb_noeud; i++)
+    {
+        somme += inst.D[sol.tour_geant[i]][sol.tour_geant[i + 1]];
+    }
+    std::cout << "TEST = " << somme << std::endl;
 }
 
 void test_r_locale(int itermax)

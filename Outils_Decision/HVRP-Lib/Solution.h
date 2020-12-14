@@ -81,6 +81,7 @@ public:
 	void opt3(Instance& inst, int iter);
 
 	void split(Instance& inst);
+	Label find_best_label(Instance& inst);
 
 	void r_locale(Instance& inst, int itermax);
 };

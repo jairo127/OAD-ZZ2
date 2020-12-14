@@ -20,9 +20,9 @@ int main()
 	//test_tg_voisin();
 	//test_tg_voisin_random();
 	//test_opt2(200); //nombre d'essai max pour opt
-	test_inserer();
+	//test_inserer();
 	//test_r_locale(100000);
-	//test_split();
+	test_split();
 	
 
 	return 0;
